@@ -21,4 +21,3 @@ public:
 	void mover();
 	void executar();
 };
-
