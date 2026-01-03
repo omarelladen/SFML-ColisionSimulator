@@ -20,6 +20,36 @@ Ball::~Ball()
 {
 }
 
+sf::CircleShape Ball::getBody()
+{
+	return body;
+}
+
+float Ball::getPosX()
+{
+    return pos.x;
+}
+
+float Ball::getPosY()
+{
+    return pos.y;
+}
+
+float Ball::getVelX()
+{
+    return vel.x;
+}
+
+float Ball::getVelY()
+{
+    return vel.y;
+}
+
+float Ball::getRadius()
+{
+    return radius;
+}
+
 void Ball::setRadius(float r)
 {
     if (r > 0)
@@ -29,11 +59,15 @@ void Ball::setRadius(float r)
     }
 }
 
-void Ball::setVel(sf::Vector2f v)
+void Ball::setVelX(float vx)
 {
-    vel = v;
+    vel.x = vx;
 }
 
+void Ball::setVelY(float vy)
+{
+    vel.y = vy;
+}
 
 void Ball::move()
 {

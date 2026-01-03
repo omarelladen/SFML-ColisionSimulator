@@ -6,7 +6,7 @@
 
 class Ball
 {
-public:
+private:
     sf::CircleShape body;
 
     sf::Vector2f pos;
@@ -18,8 +18,17 @@ public:
     Ball(float posX, float posY, float velX, float velY, float radius=50, sf::Color=sf::Color::Green);
     ~Ball();
 
-    void setRadius(float radius);
-    void setVel(sf::Vector2f v);
+    sf::CircleShape getBody();
+
+    float getPosX();
+    float getPosY();
+    float getVelX();
+    float getVelY();
+    float getRadius();
+
+    void setVelX(float vx);
+    void setVelY(float vy);
+    void setRadius(float r);
 
     void move();
 };
