@@ -29,46 +29,37 @@ sf::CircleShape Ball::getBody()
 	return body;
 }
 
-float Ball::getPosX()
+float Ball::getX()
 {
     return pos.x;
 }
 
-float Ball::getPosY()
+float Ball::getY()
 {
     return pos.y;
 }
 
-float Ball::getVelX()
+float Ball::getVX()
 {
     return vel.x;
 }
 
-float Ball::getVelY()
+float Ball::getVY()
 {
     return vel.y;
 }
 
-float Ball::getRadius()
+float Ball::getR()
 {
     return radius;
 }
 
-void Ball::setRadius(float r)
-{
-    if (r > 0)
-    {
-        radius = r;
-        body.setRadius(r);
-    }
-}
-
-void Ball::setVelX(float vx)
+void Ball::setVX(float vx)
 {
     vel.x = vx;
 }
 
-void Ball::setVelY(float vy)
+void Ball::setVY(float vy)
 {
     vel.y = vy;
 }
