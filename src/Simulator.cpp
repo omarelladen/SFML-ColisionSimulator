@@ -72,6 +72,8 @@ Simulator::Simulator(int num_balls):
 
 Simulator::~Simulator()
 {
+    for (int i = 0; i < num_balls; i++)
+        delete balls[i];
 }
 
 int Simulator::getNumBalls()
