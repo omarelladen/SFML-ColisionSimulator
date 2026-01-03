@@ -2,9 +2,13 @@
 #include <random>
 
 
-Ball::Ball(float x, float y, float vx, float vy, float radius, sf::Color color):
-    radius(radius),
-    body(radius),
+Ball::Ball(float x, float y,
+           float vx, float vy,
+           float r,
+           sf::Color color
+):
+    radius(r),
+    body(r),
     pos(0,0),
     vel(0,0)
 {

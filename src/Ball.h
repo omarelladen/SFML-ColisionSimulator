@@ -15,7 +15,11 @@ private:
     sf::Vector2f vel;
 
 public:
-    Ball(float posX, float posY, float velX, float velY, float radius=50, sf::Color=sf::Color::Green);
+    Ball(float x, float y,
+         float vx, float vy,
+         float r = 50,
+         sf::Color = sf::Color::Green
+    );
     ~Ball();
 
     sf::CircleShape getBody();
