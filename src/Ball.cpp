@@ -3,8 +3,8 @@
 
 
 Ball::Ball(float x, float y, float vx, float vy, float radius, sf::Color color):
-    body(radius),
     radius(radius),
+    body(radius),
     pos(0,0),
     vel(0,0)
 {
