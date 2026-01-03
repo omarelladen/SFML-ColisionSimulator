@@ -15,6 +15,6 @@ public:
 
     int getNumBalls();
 
-    float colided(Ball* ball1, Ball* ball2);
+    bool colided(Ball* ball1, Ball* ball2);
     void execute();
 };
