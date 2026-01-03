@@ -3,16 +3,14 @@
 #include <SFML/Graphics.hpp>
 #include <random>
 
-using namespace sf;
-
 
 class Ball
 {
 public:
-    CircleShape body;
+    sf::CircleShape body;
 
-    Vector2f pos;
-    Vector2f vel;
+    sf::Vector2f pos;
+    sf::Vector2f vel;
 
     float radius;
 
@@ -21,7 +19,7 @@ public:
     ~Ball();
 
     void setRadius(int radius);
-    void setVel(Vector2f v);
+    void setVel(sf::Vector2f v);
 
     void move();
 };
