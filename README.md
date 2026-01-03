@@ -1,4 +1,4 @@
-# 2D Colision Simulator with SFML
+# 2D Elastic Colision Simulator with SFML
 
 <p align="center" width="100%">
 <img src="data/imgs/balls.png">
