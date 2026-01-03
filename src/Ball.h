@@ -11,17 +11,17 @@ class Ball
 public:
     CircleShape body;
 
-    float radius;
     Vector2f pos;
     Vector2f vel;
 
+    float radius;
 
-    Ball(std::mt19937& gen);
+public:
+    Ball(int posX, int posY, float velX, float velY, int radius=50, sf::Color=sf::Color::Green);
     ~Ball();
 
-    void setRadius(float radius);
+    void setRadius(int radius);
     void setVel(Vector2f v);
 
     void move();
-    void execute();
 };
