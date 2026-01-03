@@ -2,7 +2,7 @@
 #include <random>
 
 
-Ball::Ball(int x, int y, float vx, float vy, int radius, sf::Color color):
+Ball::Ball(float x, float y, float vx, float vy, float radius, sf::Color color):
     body(radius),
     radius(radius),
     pos(0,0),
@@ -20,7 +20,7 @@ Ball::~Ball()
 {
 }
 
-void Ball::setRadius(int r)
+void Ball::setRadius(float r)
 {
     if (r > 0)
     {

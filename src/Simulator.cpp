@@ -81,11 +81,11 @@ int Simulator::getNumBalls()
 
 bool Simulator::colided(Ball* ball1, Ball* ball2)
 {
-    int dist_x = ball1->pos.x - ball2->pos.x;
-    int dist_y = ball1->pos.y - ball2->pos.y;
+    float dist_x = ball1->pos.x - ball2->pos.x;
+    float dist_y = ball1->pos.y - ball2->pos.y;
 
     float dist = sqrt(dist_x * dist_x + dist_y * dist_y);
-    int dist_colision = (ball1->radius + ball2->radius);
+    float dist_colision = (ball1->radius + ball2->radius);
 
     return (dist <= dist_colision);
 }

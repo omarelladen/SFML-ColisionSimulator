@@ -15,10 +15,10 @@ public:
     float radius;
 
 public:
-    Ball(int posX, int posY, float velX, float velY, int radius=50, sf::Color=sf::Color::Green);
+    Ball(float posX, float posY, float velX, float velY, float radius=50, sf::Color=sf::Color::Green);
     ~Ball();
 
-    void setRadius(int radius);
+    void setRadius(float radius);
     void setVel(sf::Vector2f v);
 
     void move();
