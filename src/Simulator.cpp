@@ -137,11 +137,11 @@ void Simulator::execute()
         {
             if (balls[i]->body.getPosition().x > (1000 - 2*balls[i]->radius) || balls[i]->body.getPosition().x < 0)
             {
-                balls[i]->setVel(Vector2f((-1) * balls[i]->vel.x, balls[i]->vel.y));
+                balls[i]->setVel(sf::Vector2f((-1) * balls[i]->vel.x, balls[i]->vel.y));
             }
             if (balls[i]->body.getPosition().y > (1000 - 2*balls[i]->radius) || balls[i]->body.getPosition().y < 0)
             {
-                balls[i]->setVel(Vector2f(balls[i]->vel.x, (-1) * balls[i]->vel.y));
+                balls[i]->setVel(sf::Vector2f(balls[i]->vel.x, (-1) * balls[i]->vel.y));
             }
         }
 

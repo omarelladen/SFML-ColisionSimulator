@@ -8,9 +8,9 @@ Ball::Ball(int x, int y, float vx, float vy, int radius, sf::Color color):
     pos(0,0),
     vel(0,0)
 {
-    vel = Vector2f(vx, vy);
+    vel = sf::Vector2f(vx, vy);
 
-    pos = Vector2f(x, y);
+    pos = sf::Vector2f(x, y);
     body.setPosition(pos);
 
     body.setFillColor(color);
@@ -29,7 +29,7 @@ void Ball::setRadius(int r)
     }
 }
 
-void Ball::setVel(Vector2f v)
+void Ball::setVel(sf::Vector2f v)
 {
     vel = v;
 }
