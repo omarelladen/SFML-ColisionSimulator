@@ -1,4 +1,5 @@
-CXX = g++ 
+CXX = g++
+CXXFLAGS = -Wall -Wextra
 LDFLAGS = `pkg-config --libs sfml-graphics sfml-window sfml-system`
 
 SOURCES = src/Ball.cpp src/main.cpp src/Simulator.cpp
