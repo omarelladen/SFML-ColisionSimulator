@@ -1,5 +1,4 @@
 #include "Ball.h"
-#include <iostream>
 #include <random>
 
 
@@ -23,7 +22,6 @@ Ball::Ball(std::mt19937& gen):
     pos = Vector2f(distPos(gen), distPos(gen));  // Posição entre 100 e 1100
 
     body.setPosition(pos);
-    std::cout << "pos " << pos.x << "," << pos.y << std::endl;
 }
 
 Ball::~Ball()

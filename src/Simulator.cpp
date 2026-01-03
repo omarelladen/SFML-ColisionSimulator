@@ -18,21 +18,19 @@ Simulator::Simulator(int num_balls):
         Ball* pBall = new Ball(gen);
         if (pBall)
         {
-        	cout << i << endl;
-
             balls.push_back(pBall);
             pBall = nullptr;
         }
     }
 
-    /*this->*/Execute();
+    /*this->*/execute();
 }
 
 Simulator::~Simulator()
 {
 }
 
-float Simulator::Colided(Ball* ball1, Ball* ball2)
+float Simulator::colided(Ball* ball1, Ball* ball2)
 {
     float dist_x = ball1->pos.x - ball2->pos.x;
     float dist_y = ball1->pos.y - ball2->pos.y;
@@ -40,13 +38,13 @@ float Simulator::Colided(Ball* ball1, Ball* ball2)
     return (sqrt(dist_x * dist_x + dist_y * dist_y) <= (ball1->radius + ball2->radius));
 }
 
-void Simulator::Execute()
+void Simulator::execute()
 {
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML Colision Simulator!");  // window = new RenderWindow(VideoMode(1000, 900), "Jogo");
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML Colision Simulator");  // window = new RenderWindow(VideoMode(1000, 900), "Jogo");
 
     // CircleShape shape(100.f);
     // shape.setFillColor(sf::Color::Green);
-    
+
     // balls[0]->pos = Vector2f(600, 400);  /////////
     // balls[0]->body.setPosition(balls[0]->pos);
     // balls[0]->body.setFillColor(sf::Color::Green);  ///////////
@@ -71,32 +69,32 @@ void Simulator::Execute()
 
 
         // Check colision between the balls
-		for (int i = 0; i < num_balls; i++)
-		{
-		    for (int j = i+1; j < num_balls; j++)
-	        {
-	        	if (Colided(balls[i], balls[j]))
-	        	{
-		            cout << "colided " << i << j << endl;
+        for (int i = 0; i < num_balls; i++)
+        {
+            for (int j = i+1; j < num_balls; j++)
+            {
+                if (colided(balls[i], balls[j]))
+                {
+                    std::cout << "colided " << i << " " << j << std::endl;
 
-		            float dist_x = balls[i]->pos.x - balls[j]->pos.x;
-		            float dist_y = balls[i]->pos.y - balls[j]->pos.y;
-		            float rq = dist_x * dist_x + dist_y * dist_y;
-
-
-		            float k1 = (balls[i]->vel.x * dist_x + balls[i]->vel.y * dist_y) / rq;
-		            float proj_1_x = k1 * dist_x;
-		            float proj_1_y = k1 * dist_y;
-
-		            float k2 = (balls[j]->vel.x * dist_x + balls[j]->vel.y * dist_y) / rq;
-		            float proj_2_x = k2 * dist_x;
-		            float proj_2_y = k2 * dist_y;
+                    float dist_x = balls[i]->pos.x - balls[j]->pos.x;
+                    float dist_y = balls[i]->pos.y - balls[j]->pos.y;
+                    float rq = dist_x * dist_x + dist_y * dist_y;
 
 
-		            balls[i]->vel.x = proj_2_x + (balls[i]->vel.x - proj_1_x);
-		            balls[i]->vel.y = proj_2_y + (balls[i]->vel.y - proj_1_y);
-		            balls[j]->vel.x = proj_1_x + (balls[j]->vel.x - proj_2_x);
-		            balls[j]->vel.y = proj_1_y + (balls[j]->vel.y - proj_2_y);
+                    float k1 = (balls[i]->vel.x * dist_x + balls[i]->vel.y * dist_y) / rq;
+                    float proj_1_x = k1 * dist_x;
+                    float proj_1_y = k1 * dist_y;
+
+                    float k2 = (balls[j]->vel.x * dist_x + balls[j]->vel.y * dist_y) / rq;
+                    float proj_2_x = k2 * dist_x;
+                    float proj_2_y = k2 * dist_y;
+
+
+                    balls[i]->vel.x = proj_2_x + (balls[i]->vel.x - proj_1_x);
+                    balls[i]->vel.y = proj_2_y + (balls[i]->vel.y - proj_1_y);
+                    balls[j]->vel.x = proj_1_x + (balls[j]->vel.x - proj_2_x);
+                    balls[j]->vel.y = proj_1_y + (balls[j]->vel.y - proj_2_y);
 		        }
 	        }
 	    }
