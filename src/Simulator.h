@@ -5,15 +5,16 @@
 
 class Simulator
 {
-public:
+private:
     std::vector<Ball*> balls;
     int num_balls;
 
-
+public:
     Simulator(int num_balls);
     ~Simulator();
+
+    int getNumBalls();
 
     float colided(Ball* ball1, Ball* ball2);
     void execute();
 };
-
