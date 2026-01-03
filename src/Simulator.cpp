@@ -81,11 +81,11 @@ int Simulator::getNumBalls()
 
 bool Simulator::colided(Ball* ball1, Ball* ball2)
 {
-    float dist_x = ball1->pos.x - ball2->pos.x;
-    float dist_y = ball1->pos.y - ball2->pos.y;
+    float dist_x = ball1->getPosX() - ball2->getPosX();
+    float dist_y = ball1->getPosY() - ball2->getPosY();
 
     float dist = sqrt(dist_x * dist_x + dist_y * dist_y);
-    float dist_colision = (ball1->radius + ball2->radius);
+    float dist_colision = (ball1->getRadius() + ball2->getRadius());
 
     return (dist <= dist_colision);
 }
@@ -99,6 +99,7 @@ void Simulator::execute()
 
     while (window.isOpen())
     {
+        // Check close window event
         sf::Event event;
         while (window.pollEvent(event))
             if (event.type == sf::Event::Closed)
@@ -112,22 +113,22 @@ void Simulator::execute()
             {
                 if (colided(balls[i], balls[j]))
                 {
-                    float dist_x = balls[i]->pos.x - balls[j]->pos.x;
-                    float dist_y = balls[i]->pos.y - balls[j]->pos.y;
+                    float dist_x = balls[i]->getPosX() - balls[j]->getPosX();
+                    float dist_y = balls[i]->getPosY() - balls[j]->getPosY();
                     float rq = dist_x * dist_x + dist_y * dist_y;
 
-                    float k1 = (balls[i]->vel.x * dist_x + balls[i]->vel.y * dist_y) / rq;
+                    float k1 = (balls[i]->getVelX() * dist_x + balls[i]->getVelY() * dist_y) / rq;
                     float proj_1_x = k1 * dist_x;
                     float proj_1_y = k1 * dist_y;
 
-                    float k2 = (balls[j]->vel.x * dist_x + balls[j]->vel.y * dist_y) / rq;
+                    float k2 = (balls[j]->getVelX() * dist_x + balls[j]->getVelY() * dist_y) / rq;
                     float proj_2_x = k2 * dist_x;
                     float proj_2_y = k2 * dist_y;
 
-                    balls[i]->vel.x = proj_2_x + (balls[i]->vel.x - proj_1_x);
-                    balls[i]->vel.y = proj_2_y + (balls[i]->vel.y - proj_1_y);
-                    balls[j]->vel.x = proj_1_x + (balls[j]->vel.x - proj_2_x);
-                    balls[j]->vel.y = proj_1_y + (balls[j]->vel.y - proj_2_y);
+                    balls[i]->setVelX(proj_2_x + (balls[i]->getVelX() - proj_1_x));
+                    balls[i]->setVelY(proj_2_y + (balls[i]->getVelY() - proj_1_y));
+                    balls[j]->setVelX(proj_1_x + (balls[j]->getVelX() - proj_2_x));
+                    balls[j]->setVelY(proj_1_y + (balls[j]->getVelY() - proj_2_y));
                 }
             }
         }
@@ -135,13 +136,13 @@ void Simulator::execute()
         // Check colision with walls
         for (int i = 0; i < num_balls; i++)
         {
-            if (balls[i]->body.getPosition().x > (WIN_SIZE - 2*balls[i]->radius) || balls[i]->body.getPosition().x < 0)
+            if (balls[i]->getPosX() > (WIN_SIZE - 2*balls[i]->getRadius()) || balls[i]->getPosX() < 0)
             {
-                balls[i]->setVel(sf::Vector2f((-1) * balls[i]->vel.x, balls[i]->vel.y));
+                balls[i]->setVelX((-1) * balls[i]->getVelX());
             }
-            if (balls[i]->body.getPosition().y > (WIN_SIZE - 2*balls[i]->radius) || balls[i]->body.getPosition().y < 0)
+            if (balls[i]->getPosY() > (WIN_SIZE - 2*balls[i]->getRadius()) || balls[i]->getPosY() < 0)
             {
-                balls[i]->setVel(sf::Vector2f(balls[i]->vel.x, (-1) * balls[i]->vel.y));
+                balls[i]->setVelY((-1) * balls[i]->getVelY());
             }
         }
 
@@ -151,7 +152,7 @@ void Simulator::execute()
         for (int i = 0; i < num_balls; i++)
         {
             balls[i]->move();
-            window.draw(balls[i]->body);
+            window.draw(balls[i]->getBody());
         }
         window.display();
     }
