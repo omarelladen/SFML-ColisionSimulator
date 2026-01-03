@@ -7,12 +7,12 @@
 class Ball
 {
 private:
+    float radius;
+
     sf::CircleShape body;
 
     sf::Vector2f pos;
     sf::Vector2f vel;
-
-    float radius;
 
 public:
     Ball(float posX, float posY, float velX, float velY, float radius=50, sf::Color=sf::Color::Green);
