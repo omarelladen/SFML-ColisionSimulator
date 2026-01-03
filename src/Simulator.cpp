@@ -84,7 +84,7 @@ bool Simulator::colided(Ball* b1, Ball* b2)
     float dx = b1->getX() - b2->getX();
     float dy = b1->getY() - b2->getY();
 
-    float d = sqrt(dx * dx + dy * dy);
+    float d = sqrt(dx*dx + dy*dy);
     float d_colision = (b1->getR() + b2->getR());
 
     return (d <= d_colision);
@@ -113,14 +113,16 @@ void Simulator::execute()
             {
                 Ball* b1 = balls[i];
                 Ball* b2 = balls[j];
+
                 if (colided(b1, b2))
                 {
                     float dx = b1->getX() - b2->getX();
                     float dy = b1->getY() - b2->getY();
-                    float rq = dx * dx + dy * dy;
 
-                    float k1 = (b1->getVX() * dx + b1->getVY() * dy) / rq;
-                    float k2 = (b2->getVX() * dx + b2->getVY() * dy) / rq;
+                    float rq = dx*dx + dy*dy;
+
+                    float k1 = (b1->getVX()*dx + b1->getVY()*dy) / rq;
+                    float k2 = (b2->getVX()*dx + b2->getVY()*dy) / rq;
 
                     float proj_x_1 = k1 * dx;
                     float proj_y_1 = k1 * dy;
@@ -140,6 +142,7 @@ void Simulator::execute()
         for (int i = 0; i < num_balls; i++)
         {
             Ball* b = balls[i];
+
             if (b->getX() > (WIN_SIZE - 2*b->getR()) ||
                 b->getX() < 0)
             {
