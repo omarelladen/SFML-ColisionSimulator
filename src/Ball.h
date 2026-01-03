@@ -8,9 +8,7 @@ class Ball
 {
 private:
     float radius;
-
     sf::CircleShape body;
-
     sf::Vector2f pos;
     sf::Vector2f vel;
 
@@ -24,15 +22,14 @@ public:
 
     sf::CircleShape getBody();
 
-    float getPosX();
-    float getPosY();
-    float getVelX();
-    float getVelY();
-    float getRadius();
+    float getX();
+    float getY();
+    float getVX();
+    float getVY();
+    float getR();
 
-    void setVelX(float vx);
-    void setVelY(float vy);
-    void setRadius(float r);
+    void setVX(float vx);
+    void setVY(float vy);
 
     void move();
 };
