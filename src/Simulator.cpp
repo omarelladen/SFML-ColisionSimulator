@@ -4,7 +4,7 @@
 #include <ctime>
 
 #define MAX_TRIES 100000
-
+#define WIN_SIZE 1000
 
 Simulator::Simulator(int num_balls):
     balls(),
@@ -79,13 +79,13 @@ int Simulator::getNumBalls()
     return num_balls;
 }
 
-float Simulator::colided(Ball* ball1, Ball* ball2)
+bool Simulator::colided(Ball* ball1, Ball* ball2)
 {
-    float dist_x = ball1->pos.x - ball2->pos.x;
-    float dist_y = ball1->pos.y - ball2->pos.y;
+    int dist_x = ball1->pos.x - ball2->pos.x;
+    int dist_y = ball1->pos.y - ball2->pos.y;
 
     float dist = sqrt(dist_x * dist_x + dist_y * dist_y);
-    float dist_colision =  (ball1->radius + ball2->radius);
+    int dist_colision = (ball1->radius + ball2->radius);
 
     return (dist <= dist_colision);
 }
@@ -93,7 +93,7 @@ float Simulator::colided(Ball* ball1, Ball* ball2)
 void Simulator::execute()
 {
     sf::RenderWindow window(
-       sf::VideoMode(1000, 1000),
+       sf::VideoMode(WIN_SIZE, WIN_SIZE),
        "SFML Colision Simulator"
     );
 
@@ -135,11 +135,11 @@ void Simulator::execute()
         // Check colision with walls
         for (int i = 0; i < num_balls; i++)
         {
-            if (balls[i]->body.getPosition().x > (1000 - 2*balls[i]->radius) || balls[i]->body.getPosition().x < 0)
+            if (balls[i]->body.getPosition().x > (WIN_SIZE - 2*balls[i]->radius) || balls[i]->body.getPosition().x < 0)
             {
                 balls[i]->setVel(sf::Vector2f((-1) * balls[i]->vel.x, balls[i]->vel.y));
             }
-            if (balls[i]->body.getPosition().y > (1000 - 2*balls[i]->radius) || balls[i]->body.getPosition().y < 0)
+            if (balls[i]->body.getPosition().y > (WIN_SIZE - 2*balls[i]->radius) || balls[i]->body.getPosition().y < 0)
             {
                 balls[i]->setVel(sf::Vector2f(balls[i]->vel.x, (-1) * balls[i]->vel.y));
             }
