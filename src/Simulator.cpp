@@ -10,7 +10,6 @@ Simulator::Simulator(int num_balls):
     balls(),
     num_balls(num_balls)
 {
-
     std::random_device rd;
     std::mt19937 gen(rd());
 

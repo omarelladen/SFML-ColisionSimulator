@@ -7,7 +7,7 @@ Ball::Ball(float x, float y,
            float r,
            sf::Color color
 ):
-    radius(r),
+    r(r),
     body(r),
     pos(0,0),
     v(0,0)
@@ -34,7 +34,7 @@ float Ball::getVX() {return v.x;}
 
 float Ball::getVY() {return v.y;}
 
-float Ball::getR() {return radius;}
+float Ball::getR() {return r;}
 
 void Ball::setVX(float vx)
 {
