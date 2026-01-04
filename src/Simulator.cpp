@@ -5,8 +5,8 @@
 Simulator::Simulator(int num_balls, int r, int win_w, int win_h):
     balls(),
     num_balls(num_balls),
-    win_h(win_h),
-    win_w(win_w)
+    win_w(win_w),
+    win_h(win_h)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
