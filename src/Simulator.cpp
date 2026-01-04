@@ -94,12 +94,14 @@ bool Simulator::colided_ball(Ball *p_b1, Ball *p_b2)
 
 bool Simulator::colided_wall_v(Ball *b)
 {
+    // Left and Right
     return (b->getX() > (win_w - 2*b->getR()) ||
             b->getX() < 0);
 }
 
 bool Simulator::colided_wall_h(Ball *b)
 {
+    // Top and Bottom
     return (b->getY() > (win_h - 2*b->getR()) ||
             b->getY() < 0);
 }
