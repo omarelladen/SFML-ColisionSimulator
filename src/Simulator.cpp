@@ -1,10 +1,4 @@
 #include "Simulator.h"
-#include <cmath>
-#include <random>
-#include <ctime>
-#include <iostream>
-#include <sstream>
-#include <sstream>
 
 #define MAX_TRIES 100000
 #define WIN_SIZE 600
@@ -87,7 +81,7 @@ bool Simulator::colided_ball(Ball *b1, Ball *b2)
     float dx = b1->getX() - b2->getX();
     float dy = b1->getY() - b2->getY();
 
-    float d = sqrt(dx*dx + dy*dy);
+    float d = std::sqrt(dx*dx + dy*dy);
     float d_colision = (b1->getR() + b2->getR());
 
     return (d <= d_colision);
@@ -193,7 +187,7 @@ void Simulator::execute()
         }
 
         // Move and draw the balls
-        window.clear(); 
+        window.clear(sf::Color::Black);
         for (int i = 0; i < num_balls; i++)
         {
             Ball *b = balls[i];
@@ -211,9 +205,10 @@ void Simulator::execute()
             k += vx*vx + vy*vy;
         }
 
-        // Print Info Text
+        // Draw Info Text
         std::ostringstream ss;
         ss << "n=" << num_balls << std::endl
+           << "r=" << balls[0]->getR() << std::endl
            << "K=" << k;
         text.setString(ss.str());
 	    window.draw(text);

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Ball.h"
+#include <iostream>
+#include <sstream>
+#include <random>
 
 
 class Simulator
