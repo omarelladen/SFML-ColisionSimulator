@@ -9,7 +9,8 @@ Ball::Ball(float x, float y,
     r(r),
     body(r),
     pos(0,0),
-    v(0,0)
+    v(0,0),
+    p_prev_col(nullptr)
 {
     v = sf::Vector2f(vx, vy);
 
@@ -35,6 +36,8 @@ float Ball::getVY() {return v.y;}
 
 float Ball::getR() {return r;}
 
+Ball *Ball::getPrevCol() {return p_prev_col;}
+
 void Ball::setVX(float vx)
 {
     v.x = vx;
@@ -43,6 +46,11 @@ void Ball::setVX(float vx)
 void Ball::setVY(float vy)
 {
     v.y = vy;
+}
+
+void Ball::setPrevCol(Ball *p_b)
+{
+    p_prev_col = p_b;
 }
 
 void Ball::move()
