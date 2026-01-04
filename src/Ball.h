@@ -7,7 +7,7 @@
 class Ball
 {
 private:
-    float radius;
+    float r;
     sf::CircleShape body;
     sf::Vector2f pos;
     sf::Vector2f v;
