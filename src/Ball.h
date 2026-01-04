@@ -11,6 +11,8 @@ private:
     sf::Vector2f pos;
     sf::Vector2f v;
 
+    Ball *p_prev_col;
+
 public:
     Ball(float x, float y,
          float vx, float vy,
@@ -25,9 +27,11 @@ public:
     float getVX();
     float getVY();
     float getR();
+    Ball *getPrevCol();
 
     void setVX(float vx);
     void setVY(float vy);
+    void setPrevCol(Ball *p_b);
 
     void move();
 };
