@@ -31,7 +31,7 @@ Simulator::Simulator(int num_balls):
         float vx = distV(gen);
         float vy = distV(gen);
 
-        Ball* pBall = new Ball(x, y, vx, vy);
+        Ball *pBall = new Ball(x, y, vx, vy);
 
         if (pBall)
         {
@@ -46,8 +46,8 @@ Simulator::Simulator(int num_balls):
                // Check overlap
                for (int i = 0; i < count_new_balls; i++)
                {
-                   Ball* pBall_check = balls[i];
-                   if (pBall_check != pBall && colided(pBall, pBall_check))
+                   Ball *pBall_check = balls[i];
+                   if (pBall_check != pBall && colided_ball(pBall, pBall_check))
                    {
                        num_tries++;
                        delete pBall;
@@ -82,7 +82,7 @@ int Simulator::getNumBalls()
     return num_balls;
 }
 
-bool Simulator::colided(Ball* b1, Ball* b2)
+bool Simulator::colided_ball(Ball *b1, Ball *b2)
 {
     float dx = b1->getX() - b2->getX();
     float dy = b1->getY() - b2->getY();
@@ -91,6 +91,46 @@ bool Simulator::colided(Ball* b1, Ball* b2)
     float d_colision = (b1->getR() + b2->getR());
 
     return (d <= d_colision);
+}
+
+bool Simulator::colided_wall_v(Ball *b)
+{
+    return (b->getX() > (WIN_SIZE - 2*b->getR()) ||
+            b->getX() < 0);
+}
+
+bool Simulator::colided_wall_h(Ball *b)
+{
+    return (b->getY() > (WIN_SIZE - 2*b->getR()) ||
+            b->getY() < 0);
+}
+
+void Simulator::update_colision_vel(Ball *b1, Ball *b2)
+{
+    float dx = b1->getX() - b2->getX();
+    float dy = b1->getY() - b2->getY();
+
+    float rq = dx*dx + dy*dy;
+
+    float k1 = (b1->getVX()*dx + b1->getVY()*dy) / rq;
+    float k2 = (b2->getVX()*dx + b2->getVY()*dy) / rq;
+
+    // Vector projetion on the colision direction
+    float proj_vx_1 = k1 * dx;
+    float proj_vy_1 = k1 * dy;
+    float proj_vx_2 = k2 * dx;
+    float proj_vy_2 = k2 * dy;
+
+    // Vector orthogonal to the colision direction
+    float oproj_vx_1 = b1->getVX() - proj_vx_1;
+    float oproj_vy_1 = b1->getVY() - proj_vy_1;
+    float oproj_vx_2 = b2->getVX() - proj_vx_2;
+    float oproj_vy_2 = b2->getVY() - proj_vy_2;
+
+    b1->setVX(proj_vx_2 + oproj_vx_1);
+    b1->setVY(proj_vy_2 + oproj_vy_1);
+    b2->setVX(proj_vx_1 + oproj_vx_2);
+    b2->setVY(proj_vy_1 + oproj_vy_2);
 }
 
 void Simulator::execute()
@@ -127,35 +167,12 @@ void Simulator::execute()
         {
             for (int j = i+1; j < num_balls; j++)
             {
-                Ball* b1 = balls[i];
-                Ball* b2 = balls[j];
+                Ball *b1 = balls[i];
+                Ball *b2 = balls[j];
 
-                if (colided(b1, b2))
+                if (colided_ball(b1, b2))
                 {
-                    float dx = b1->getX() - b2->getX();
-                    float dy = b1->getY() - b2->getY();
-
-                    float rq = dx*dx + dy*dy;
-
-                    float k1 = (b1->getVX()*dx + b1->getVY()*dy) / rq;
-                    float k2 = (b2->getVX()*dx + b2->getVY()*dy) / rq;
-
-                    // Vector projetion on the colision direction
-                    float proj_vx_1 = k1 * dx;
-                    float proj_vy_1 = k1 * dy;
-                    float proj_vx_2 = k2 * dx;
-                    float proj_vy_2 = k2 * dy;
-
-                    // Vector orthogonal to the colision direction
-                    float oproj_vx_1 = b1->getVX() - proj_vx_1;
-                    float oproj_vy_1 = b1->getVY() - proj_vy_1;
-                    float oproj_vx_2 = b2->getVX() - proj_vx_2;
-                    float oproj_vy_2 = b2->getVY() - proj_vy_2;
-
-                    b1->setVX(proj_vx_2 + oproj_vx_1);
-                    b1->setVY(proj_vy_2 + oproj_vy_1);
-                    b2->setVX(proj_vx_1 + oproj_vx_2);
-                    b2->setVY(proj_vy_1 + oproj_vy_2);
+                    update_colision_vel(b1, b2);
                 }
             }
         }
@@ -163,15 +180,13 @@ void Simulator::execute()
         // Check colision with walls
         for (int i = 0; i < num_balls; i++)
         {
-            Ball* b = balls[i];
+            Ball *b = balls[i];
 
-            if (b->getX() > (WIN_SIZE - 2*b->getR()) ||
-                b->getX() < 0)
+            if (colided_wall_v(b))
             {
                 b->setVX((-1) * b->getVX());
             }
-            if (b->getY() > (WIN_SIZE - 2*b->getR()) ||
-                b->getY() < 0)
+            if (colided_wall_h(b))
             {
                 b->setVY((-1) * b->getVY());
             }
@@ -181,7 +196,7 @@ void Simulator::execute()
         window.clear(); 
         for (int i = 0; i < num_balls; i++)
         {
-            Ball* b = balls[i];
+            Ball *b = balls[i];
             b->move();
             window.draw(b->getBody());
         }
@@ -190,7 +205,7 @@ void Simulator::execute()
         double k = 0;
         for (int i = 0; i < num_balls; i++)
         {
-            Ball* b = balls[i];
+            Ball *b = balls[i];
             float vx = b->getVX();
             float vy = b->getVY();
             k += vx*vx + vy*vy;
@@ -198,7 +213,8 @@ void Simulator::execute()
 
         // Print Info Text
         std::ostringstream ss;
-        ss << "num_balls=" << num_balls << std::endl << "k=" << k;
+        ss << "n=" << num_balls << std::endl
+           << "K=" << k;
         text.setString(ss.str());
 	    window.draw(text);
 
