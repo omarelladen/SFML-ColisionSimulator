@@ -15,6 +15,11 @@ public:
 
     int getNumBalls();
 
-    bool colided(Ball* ball1, Ball* ball2);
     void execute();
+
+private:
+    bool colided_ball(Ball *ball1, Ball *ball2);
+    void update_colision_vel(Ball *b1, Ball *b2);
+    bool colided_wall_v(Ball *b);
+    bool colided_wall_h(Ball *b);
 };
