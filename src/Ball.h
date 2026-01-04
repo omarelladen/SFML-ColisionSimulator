@@ -7,6 +7,7 @@ class Ball
 {
 private:
     float r;
+    float m;
     sf::CircleShape body;
     sf::Vector2f pos;
     sf::Vector2f v;
@@ -16,7 +17,7 @@ private:
 public:
     Ball(float x, float y,
          float vx, float vy,
-         float,
+         float r, float m,
          sf::Color = sf::Color::Green
     );
     ~Ball();
@@ -27,6 +28,7 @@ public:
     float getVX();
     float getVY();
     float getR();
+    float getM();
     Ball *getPrevCol();
 
     void setVX(float vx);

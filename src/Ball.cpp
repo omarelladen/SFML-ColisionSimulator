@@ -3,10 +3,11 @@
 
 Ball::Ball(float x, float y,
            float vx, float vy,
-           float r,
+           float r, float m,
            sf::Color color
 ):
     r(r),
+    m(m),
     body(r),
     pos(0,0),
     v(0,0),
@@ -35,6 +36,8 @@ float Ball::getVX() {return v.x;}
 float Ball::getVY() {return v.y;}
 
 float Ball::getR() {return r;}
+
+float Ball::getM() {return m;}
 
 Ball *Ball::getPrevCol() {return p_prev_col;}
 
