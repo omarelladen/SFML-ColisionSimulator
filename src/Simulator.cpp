@@ -2,6 +2,7 @@
 #include <cmath>
 #include <random>
 #include <ctime>
+#include <iostream>
 
 #define MAX_TRIES 100000
 #define WIN_SIZE 1000
@@ -123,20 +124,22 @@ void Simulator::execute()
                     float k1 = (b1->getVX()*dx + b1->getVY()*dy) / rq;
                     float k2 = (b2->getVX()*dx + b2->getVY()*dy) / rq;
 
+                    // Vector projetion on the colision direction
                     float proj_vx_1 = k1 * dx;
                     float proj_vy_1 = k1 * dy;
                     float proj_vx_2 = k2 * dx;
                     float proj_vy_2 = k2 * dy;
 
-                    float norm_vx_1 = b1->getVX() - proj_vx_1;
-                    float norm_vy_1 = b1->getVY() - proj_vy_1;
-                    float norm_vx_2 = b2->getVX() - proj_vx_2;
-                    float norm_vy_2 = b2->getVY() - proj_vy_2;
+                    // Vector orthogonal to the colision direction
+                    float oproj_vx_1 = b1->getVX() - proj_vx_1;
+                    float oproj_vy_1 = b1->getVY() - proj_vy_1;
+                    float oproj_vx_2 = b2->getVX() - proj_vx_2;
+                    float oproj_vy_2 = b2->getVY() - proj_vy_2;
 
-                    b1->setVX(proj_vx_2 + norm_vx_1);
-                    b1->setVY(proj_vy_2 + norm_vy_1);
-                    b2->setVX(proj_vx_1 + norm_vx_2);
-                    b2->setVY(proj_vy_1 + norm_vy_2);
+                    b1->setVX(proj_vx_2 + oproj_vx_1);
+                    b1->setVY(proj_vy_2 + oproj_vy_1);
+                    b2->setVX(proj_vx_1 + oproj_vx_2);
+                    b2->setVY(proj_vy_1 + oproj_vy_2);
                 }
             }
         }
