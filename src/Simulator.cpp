@@ -240,11 +240,11 @@ void Simulator::execute()
            << "r=" << balls[0]->getR() << std::endl
            << "m=" << balls[0]->getM() << std::endl
            << "M=" << m_total << std::endl
-           << "vx=" << std::setprecision(3) << vx_total << std::endl
-           << "vy=" << std::setprecision(3) << vy_total << std::endl
+           << "Vx=" << std::setprecision(3) << vx_total << std::endl
+           << "Vy=" << std::setprecision(3) << vy_total << std::endl
            << "K=" << std::setprecision(3) << k_total << std::endl
-           << "vxcm=" << std::setprecision(3) << vxcm << std::endl
-           << "vycm=" << std::setprecision(3) << vycm << std::endl
+           << "Vxcm=" << std::setprecision(3) << vxcm << std::endl
+           << "Vycm=" << std::setprecision(3) << vycm << std::endl
            << "res=" << win_w << "x" << win_h << std::endl
            ;
 
