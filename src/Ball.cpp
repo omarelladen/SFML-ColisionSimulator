@@ -10,9 +10,9 @@ Ball::Ball(float x, float y,
     radius(r),
     body(r),
     pos(0,0),
-    vel(0,0)
+    v(0,0)
 {
-    vel = sf::Vector2f(vx, vy);
+    v = sf::Vector2f(vx, vy);
 
     pos = sf::Vector2f(x, y);
     body.setPosition(pos);
@@ -24,48 +24,30 @@ Ball::~Ball()
 {
 }
 
-sf::CircleShape Ball::getBody()
-{
-	return body;
-}
+sf::CircleShape Ball::getBody() {return body;}
 
-float Ball::getX()
-{
-    return pos.x;
-}
+float Ball::getX() {return pos.x;}
 
-float Ball::getY()
-{
-    return pos.y;
-}
+float Ball::getY() {return pos.y;}
 
-float Ball::getVX()
-{
-    return vel.x;
-}
+float Ball::getVX() {return v.x;}
 
-float Ball::getVY()
-{
-    return vel.y;
-}
+float Ball::getVY() {return v.y;}
 
-float Ball::getR()
-{
-    return radius;
-}
+float Ball::getR() {return radius;}
 
 void Ball::setVX(float vx)
 {
-    vel.x = vx;
+    v.x = vx;
 }
 
 void Ball::setVY(float vy)
 {
-    vel.y = vy;
+    v.y = vy;
 }
 
 void Ball::move()
 {
-    body.move(vel);
+    body.move(v);
     pos = body.getPosition();
 }

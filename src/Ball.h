@@ -10,7 +10,7 @@ private:
     float radius;
     sf::CircleShape body;
     sf::Vector2f pos;
-    sf::Vector2f vel;
+    sf::Vector2f v;
 
 public:
     Ball(float x, float y,
