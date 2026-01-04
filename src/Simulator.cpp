@@ -14,19 +14,19 @@ Simulator::Simulator(int num_balls):
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    int count_num_balls = 0;
+    int count_new_balls = 0;
     int num_tries = 0;
-    while (count_num_balls < this->num_balls && num_tries < MAX_TRIES)
+    while (count_new_balls < this->num_balls && num_tries < MAX_TRIES)
     {
         // Generate random values
         std::uniform_int_distribution<int> distPos(200, 900);
-        std::uniform_real_distribution<float> distVel(0.2f, 0.6f);
+        std::uniform_real_distribution<float> distV(0.2f, 0.6f);
 
         int x = distPos(gen);
         int y = distPos(gen);
 
-        float vx = distVel(gen);
-        float vy = distVel(gen);
+        float vx = distV(gen);
+        float vy = distV(gen);
 
         Ball* pBall = new Ball(x, y, vx, vy);
 
@@ -36,38 +36,36 @@ Simulator::Simulator(int num_balls):
             if (balls.empty())
             {
                 balls.push_back(pBall);
-                count_num_balls++;
+                count_new_balls++;
             }
             else
             {
                // Check overlap
-               for (int i = 0; i < count_num_balls; i++)
+               for (int i = 0; i < count_new_balls; i++)
                {
                    Ball* pBall_check = balls[i];
                    if (pBall_check != pBall && colided(pBall, pBall_check))
                    {
                        num_tries++;
                        delete pBall;
-                          pBall = nullptr;
-                          break;
+                       pBall = nullptr;
+                       break;
                    }
                }
 
-               // No colision
+               // Push if no overlap
                if (pBall)
                {
                    num_tries = 0;
                    balls.push_back(pBall);
-                   count_num_balls++;
+                   count_new_balls++;
                }
             }
         }
     }
 
     if (num_tries == MAX_TRIES)
-    {
         this->num_balls = 0;
-    }
 }
 
 Simulator::~Simulator()
@@ -126,16 +124,20 @@ void Simulator::execute()
                     float k1 = (b1->getVX()*dx + b1->getVY()*dy) / rq;
                     float k2 = (b2->getVX()*dx + b2->getVY()*dy) / rq;
 
-                    float proj_x_1 = k1 * dx;
-                    float proj_y_1 = k1 * dy;
+                    float proj_vx_1 = k1 * dx;
+                    float proj_vy_1 = k1 * dy;
+                    float proj_vx_2 = k2 * dx;
+                    float proj_vy_2 = k2 * dy;
 
-                    float proj_x_2 = k2 * dx;
-                    float proj_y_2 = k2 * dy;
+                    float norm_vx_1 = b1->getVX() - proj_vx_1;
+                    float norm_vy_1 = b1->getVY() - proj_vy_1;
+                    float norm_vx_2 = b2->getVX() - proj_vx_2;
+                    float norm_vy_2 = b2->getVY() - proj_vy_2;
 
-                    b1->setVX(proj_x_2 + (b1->getVX() - proj_x_1));
-                    b1->setVY(proj_y_2 + (b1->getVY() - proj_y_1));
-                    b2->setVX(proj_x_1 + (b2->getVX() - proj_x_2));
-                    b2->setVY(proj_y_1 + (b2->getVY() - proj_y_2));
+                    b1->setVX(proj_vx_2 + norm_vx_1);
+                    b1->setVY(proj_vy_2 + norm_vy_1);
+                    b2->setVX(proj_vx_1 + norm_vx_2);
+                    b2->setVY(proj_vy_1 + norm_vy_2);
                 }
             }
         }
