@@ -17,14 +17,14 @@ Simulator::Simulator(int num_balls):
            num_tries < MAX_TRIES)
     {
         // Generate random values
-        std::uniform_int_distribution<int> distPos(100, WIN_SIZE-100);
-        std::uniform_real_distribution<float> distV(0.1f, 0.3f);
+        std::uniform_int_distribution<int> dist_pos(100, WIN_SIZE-100);
+        std::uniform_real_distribution<float> dist_v(0.1f, 0.3f);
 
-        int x = distPos(gen);
-        int y = distPos(gen);
+        int x = dist_pos(gen);
+        int y = dist_pos(gen);
 
-        float vx = distV(gen);
-        float vy = distV(gen);
+        float vx = dist_v(gen);
+        float vy = dist_v(gen);
 
         Ball *p_all = new Ball(x, y, vx, vy);
 
@@ -106,16 +106,16 @@ void Simulator::update_colision_vel(Ball *p_b1, Ball *p_b2)
     float dx = p_b1->getX() - p_b2->getX();
     float dy = p_b1->getY() - p_b2->getY();
 
-    float rq = dx*dx + dy*dy;
+    float m = dx*dx + dy*dy;
 
-    float k1 = (p_b1->getVX()*dx + p_b1->getVY()*dy) / rq;
-    float k2 = (p_b2->getVX()*dx + p_b2->getVY()*dy) / rq;
+    float c1 = (p_b1->getVX()*dx + p_b1->getVY()*dy) / m;
+    float c2 = (p_b2->getVX()*dx + p_b2->getVY()*dy) / m;
 
     // Vector projetion on the colision direction
-    float proj_vx_1 = k1 * dx;
-    float proj_vy_1 = k1 * dy;
-    float proj_vx_2 = k2 * dx;
-    float proj_vy_2 = k2 * dy;
+    float proj_vx_1 = c1 * dx;
+    float proj_vy_1 = c1 * dy;
+    float proj_vx_2 = c2 * dx;
+    float proj_vy_2 = c2 * dy;
 
     // Vector orthogonal to the colision direction
     float oproj_vx_1 = p_b1->getVX() - proj_vx_1;
