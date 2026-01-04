@@ -13,7 +13,7 @@ void readInput(int *p, int d, const std::string s)
     if (std::cin.peek() == '\n')
         *p = d;
     else if (!(std::cin >> *p))
-        std::cout << "Invalid input.\n";
+        std::cout << "Invalid input!" << std::endl;
 
     clearCinBuffer();
 }
@@ -34,17 +34,19 @@ int main()
     int win_h = 0;
     readInput(&win_h, 600, "Window height");
 
+    if (2*r >= win_h || 2*r >= win_w)
+    {
+        std::cout << "Bad size!" << std::endl;
+        return 0;
+    }
+
 
     Simulator simulator(num_balls, r, win_h, win_w);
 
     if (simulator.getNumBalls() > 0)
-    {
         simulator.execute();
-    }
     else
-    {
-        std::cout << "Error: Bad number of balls!" << std::endl;
-    }
+        std::cout << "Bad size!" << std::endl;
 
     return 0;
 }

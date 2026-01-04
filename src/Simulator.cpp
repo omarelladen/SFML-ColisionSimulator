@@ -17,24 +17,26 @@ Simulator::Simulator(int num_balls, int r, int win_w, int win_h):
            num_tries < MAX_TRIES)
     {
         // Generate random values
-        std::uniform_int_distribution<int> dist_pos_x(2*r + 1, win_w - 2*r - 1);
-        std::uniform_int_distribution<int> dist_pos_y(2*r + 1, win_h - 2*r - 1);
-        std::uniform_real_distribution<float> dist_v(0.1f, 0.3f);
+        std::uniform_int_distribution<int> distr_pos_x(1, win_w - 2*r - 1);
+        std::uniform_int_distribution<int> distr_pos_y(1, win_h - 2*r - 1);
 
-        int x = dist_pos_x(gen);
-        int y = dist_pos_y(gen);
+        std::uniform_real_distribution<float> distr_v(0.1f, 0.3f);
 
-        float vx = dist_v(gen);
-        float vy = dist_v(gen);
+        int x = distr_pos_x(gen);
+        int y = distr_pos_y(gen);
 
-        Ball *p_all = new Ball(x, y, vx, vy, r);
+        float vx = distr_v(gen);
+        float vy = distr_v(gen);
 
-        if (p_all)
+
+        Ball *p_ball = new Ball(x, y, vx, vy, r);
+
+        if (p_ball)
         {
             // Push first ball
             if (balls.empty())
             {
-                balls.push_back(p_all);
+                balls.push_back(p_ball);
                 count_new_balls++;
             }
             else
@@ -43,21 +45,21 @@ Simulator::Simulator(int num_balls, int r, int win_w, int win_h):
                for (int i = 0; i < count_new_balls; i++)
                {
                    Ball *p_ball_check = balls[i];
-                   if (p_ball_check != p_all &&
-                       colided_ball(p_all, p_ball_check))
+                   if (p_ball_check != p_ball &&
+                       colided_ball(p_ball, p_ball_check))
                    {
                        num_tries++;
-                       delete p_all;
-                       p_all = nullptr;
+                       delete p_ball;
+                       p_ball = nullptr;
                        break;
                    }
                }
 
                // Push if no overlap
-               if (p_all)
+               if (p_ball)
                {
                    num_tries = 0;
-                   balls.push_back(p_all);
+                   balls.push_back(p_ball);
                    count_new_balls++;
                }
             }
