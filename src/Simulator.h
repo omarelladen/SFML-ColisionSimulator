@@ -16,7 +16,9 @@ private:
     int win_h;
 
 public:
-    Simulator(int num_balls, int r, int win_w, int win_h);
+    Simulator(int num_balls,
+              float r, float m,
+              int win_w, int win_h);
     ~Simulator();
 
     int getNumBalls();

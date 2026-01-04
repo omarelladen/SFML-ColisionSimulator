@@ -25,13 +25,16 @@ int main()
     int num_balls = 0;
     readInput(&num_balls, 3, "Number of balls");
 
-    int r = 0;
+    int r;
     readInput(&r, 30, "Ball radius");
 
-    int win_w = 0;
+    int m;
+    readInput(&m, 1, "Ball mass");
+
+    int win_w;
     readInput(&win_w, 600, "Window width");
 
-    int win_h = 0;
+    int win_h;
     readInput(&win_h, 600, "Window height");
 
     if (2*r >= win_h || 2*r >= win_w)
@@ -41,7 +44,7 @@ int main()
     }
 
 
-    Simulator simulator(num_balls, r, win_h, win_w);
+    Simulator simulator(num_balls, r, m, win_h, win_w);
 
     if (simulator.getNumBalls() > 0)
         simulator.execute();

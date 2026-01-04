@@ -2,7 +2,9 @@
 
 #define MAX_TRIES 100000
 
-Simulator::Simulator(int num_balls, int r, int win_w, int win_h):
+Simulator::Simulator(int num_balls,
+                     float r, float m,
+                     int win_w, int win_h):
     balls(),
     num_balls(num_balls),
     win_w(win_w),
@@ -20,7 +22,7 @@ Simulator::Simulator(int num_balls, int r, int win_w, int win_h):
         std::uniform_int_distribution<int> distr_pos_x(1, win_w - 2*r - 1);
         std::uniform_int_distribution<int> distr_pos_y(1, win_h - 2*r - 1);
 
-        std::uniform_real_distribution<float> distr_v(0.1f, 0.3f);
+        std::uniform_real_distribution<float> distr_v(0.01f, 0.3f);
 
         int x = distr_pos_x(gen);
         int y = distr_pos_y(gen);
@@ -29,7 +31,7 @@ Simulator::Simulator(int num_balls, int r, int win_w, int win_h):
         float vy = distr_v(gen);
 
 
-        Ball *p_ball = new Ball(x, y, vx, vy, r);
+        Ball *p_ball = new Ball(x, y, vx, vy, r, m);
 
         if (p_ball)
         {
@@ -147,7 +149,7 @@ void Simulator::execute()
     sf::Font font;
     font.loadFromFile("data/fonts/OpenSans-VariableFont_wdth,wght.ttf");
 
-    // Info Text
+    // Stats Text
     sf::Text text;
     text.setFont(font);
     text.setFillColor(sf::Color::White);
@@ -209,23 +211,42 @@ void Simulator::execute()
             window.draw(p_b->getBody());
         }
 
-        // Calculate kinectic energy (m=1)
-        double k = 0;
+        // Calculate stats
+        double  k_total = 0;
+        double vx_total = 0;
+        double vy_total = 0;
+        double  m_total = 0;
         for (int i = 0; i < num_balls; i++)
         {
             Ball *p_b = balls[i];
+
             float vx = p_b->getVX();
             float vy = p_b->getVY();
-            k += vx*vx + vy*vy;
-        }
+            float m = p_b->getM();
 
-        // Draw Info Text
+            vx_total += vx;
+            vy_total += vy;
+            k_total += m*(vx*vx + vy*vy);
+            m_total += m;
+        }
+        k_total /= 2;
+
+        float vxcm = vx_total / m_total;
+        float vycm = vy_total / m_total;
+
+        // Draw stats Text
         std::ostringstream ss;
         ss << "n=" << num_balls << std::endl
            << "r=" << balls[0]->getR() << std::endl
-           << "w=" << win_w << std::endl
-           << "h=" << win_h << std::endl
-           << "K=" << std::setprecision(4) << k << std::endl;
+           << "m=" << balls[0]->getM() << std::endl
+           << "M=" << m_total << std::endl
+           << "vx=" << std::setprecision(3) << vx_total << std::endl
+           << "vy=" << std::setprecision(3) << vy_total << std::endl
+           << "K=" << std::setprecision(3) << k_total << std::endl
+           << "vxcm=" << std::setprecision(3) << vxcm << std::endl
+           << "vycm=" << std::setprecision(3) << vycm << std::endl
+           << "res=" << win_w << "x" << win_h << std::endl
+           ;
 
         text.setString(ss.str());
 	    window.draw(text);
