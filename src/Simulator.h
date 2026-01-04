@@ -3,6 +3,7 @@
 #include "Ball.h"
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 #include <random>
 
 
@@ -11,9 +12,11 @@ class Simulator
 private:
     std::vector<Ball*> balls;
     int num_balls;
+    int win_w;
+    int win_h;
 
 public:
-    Simulator(int num_balls);
+    Simulator(int num_balls, int r, int win_w, int win_h);
     ~Simulator();
 
     int getNumBalls();
