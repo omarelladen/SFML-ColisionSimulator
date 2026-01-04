@@ -3,9 +3,12 @@
 #include <random>
 #include <ctime>
 #include <iostream>
+#include <sstream>
+#include <sstream>
 
 #define MAX_TRIES 100000
-#define WIN_SIZE 1000
+#define WIN_SIZE 600
+
 
 Simulator::Simulator(int num_balls):
     balls(),
@@ -19,8 +22,8 @@ Simulator::Simulator(int num_balls):
     while (count_new_balls < this->num_balls && num_tries < MAX_TRIES)
     {
         // Generate random values
-        std::uniform_int_distribution<int> distPos(200, 900);
-        std::uniform_real_distribution<float> distV(0.2f, 0.6f);
+        std::uniform_int_distribution<int> distPos(100, WIN_SIZE-100);
+        std::uniform_real_distribution<float> distV(0.1f, 0.3f);
 
         int x = distPos(gen);
         int y = distPos(gen);
@@ -92,10 +95,23 @@ bool Simulator::colided(Ball* b1, Ball* b2)
 
 void Simulator::execute()
 {
+    // Window
     sf::RenderWindow window(
        sf::VideoMode(WIN_SIZE, WIN_SIZE),
        "SFML Colision Simulator"
     );
+
+    // Text Font
+    sf::Font font;
+    font.loadFromFile("data/fonts/OpenSans-VariableFont_wdth,wght.ttf");
+
+    // Info Text
+    sf::Text text;
+    text.setFont(font);
+    text.setFillColor(sf::Color::White);
+    text.setCharacterSize(12);
+    text.setPosition(10,10);
+
 
     while (window.isOpen())
     {
@@ -161,7 +177,6 @@ void Simulator::execute()
             }
         }
 
-
         // Move and draw the balls
         window.clear(); 
         for (int i = 0; i < num_balls; i++)
@@ -170,6 +185,24 @@ void Simulator::execute()
             b->move();
             window.draw(b->getBody());
         }
-        window.display();
+
+        // Calculate kinectic energy (m=1)
+        double k = 0;
+        for (int i = 0; i < num_balls; i++)
+        {
+            Ball* b = balls[i];
+            float vx = b->getVX();
+            float vy = b->getVY();
+            k += vx*vx + vy*vy;
+        }
+
+        // Print Info Text
+        std::ostringstream ss;
+        ss << "num_balls=" << num_balls << std::endl << "k=" << k;
+        text.setString(ss.str());
+	    window.draw(text);
+
+
+		window.display();
     }
 }

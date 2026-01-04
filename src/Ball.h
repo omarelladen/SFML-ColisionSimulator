@@ -15,13 +15,12 @@ private:
 public:
     Ball(float x, float y,
          float vx, float vy,
-         float r = 50,
+         float r = 30,
          sf::Color = sf::Color::Green
     );
     ~Ball();
 
     sf::CircleShape getBody();
-
     float getX();
     float getY();
     float getVX();
