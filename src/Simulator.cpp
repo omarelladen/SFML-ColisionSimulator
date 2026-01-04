@@ -1,12 +1,12 @@
 #include "Simulator.h"
 
 #define MAX_TRIES 100000
-#define WIN_SIZE 600
 
-
-Simulator::Simulator(int num_balls):
+Simulator::Simulator(int num_balls, int r, int win_w, int win_h):
     balls(),
-    num_balls(num_balls)
+    num_balls(num_balls),
+    win_h(win_h),
+    win_w(win_w)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -17,16 +17,17 @@ Simulator::Simulator(int num_balls):
            num_tries < MAX_TRIES)
     {
         // Generate random values
-        std::uniform_int_distribution<int> dist_pos(100, WIN_SIZE-100);
+        std::uniform_int_distribution<int> dist_pos_x(2*r + 1, win_w - 2*r - 1);
+        std::uniform_int_distribution<int> dist_pos_y(2*r + 1, win_h - 2*r - 1);
         std::uniform_real_distribution<float> dist_v(0.1f, 0.3f);
 
-        int x = dist_pos(gen);
-        int y = dist_pos(gen);
+        int x = dist_pos_x(gen);
+        int y = dist_pos_y(gen);
 
         float vx = dist_v(gen);
         float vy = dist_v(gen);
 
-        Ball *p_all = new Ball(x, y, vx, vy);
+        Ball *p_all = new Ball(x, y, vx, vy, r);
 
         if (p_all)
         {
@@ -91,13 +92,13 @@ bool Simulator::colided_ball(Ball *p_b1, Ball *p_b2)
 
 bool Simulator::colided_wall_v(Ball *b)
 {
-    return (b->getX() > (WIN_SIZE - 2*b->getR()) ||
+    return (b->getX() > (win_w - 2*b->getR()) ||
             b->getX() < 0);
 }
 
 bool Simulator::colided_wall_h(Ball *b)
 {
-    return (b->getY() > (WIN_SIZE - 2*b->getR()) ||
+    return (b->getY() > (win_h - 2*b->getR()) ||
             b->getY() < 0);
 }
 
@@ -106,10 +107,10 @@ void Simulator::update_colision_vel(Ball *p_b1, Ball *p_b2)
     float dx = p_b1->getX() - p_b2->getX();
     float dy = p_b1->getY() - p_b2->getY();
 
-    float m = dx*dx + dy*dy;
+    float div = dx*dx + dy*dy;
 
-    float c1 = (p_b1->getVX()*dx + p_b1->getVY()*dy) / m;
-    float c2 = (p_b2->getVX()*dx + p_b2->getVY()*dy) / m;
+    float c1 = (p_b1->getVX()*dx + p_b1->getVY()*dy) / div;
+    float c2 = (p_b2->getVX()*dx + p_b2->getVY()*dy) / div;
 
     // Vector projetion on the colision direction
     float proj_vx_1 = c1 * dx;
@@ -133,9 +134,10 @@ void Simulator::execute()
 {
     // Window
     sf::RenderWindow window(
-       sf::VideoMode(WIN_SIZE, WIN_SIZE),
+       sf::VideoMode(win_w, win_h),
        "SFML Colision Simulator"
     );
+
 
     // Text Font
     sf::Font font;
@@ -217,10 +219,12 @@ void Simulator::execute()
         std::ostringstream ss;
         ss << "n=" << num_balls << std::endl
            << "r=" << balls[0]->getR() << std::endl
-           << "K=" << k;
+           << "w=" << win_w << std::endl
+           << "h=" << win_h << std::endl
+           << "K=" << std::setprecision(4) << k << std::endl;
+
         text.setString(ss.str());
 	    window.draw(text);
-
 
 		window.display();
     }

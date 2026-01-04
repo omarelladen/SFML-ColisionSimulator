@@ -16,7 +16,7 @@ private:
 public:
     Ball(float x, float y,
          float vx, float vy,
-         float r = 30,
+         float,
          sf::Color = sf::Color::Green
     );
     ~Ball();
