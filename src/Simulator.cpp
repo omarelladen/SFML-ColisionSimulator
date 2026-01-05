@@ -1,6 +1,7 @@
 #include "Simulator.h"
 
 #define MAX_TRIES 100000
+#define FPS 120
 
 Simulator::Simulator(int num_balls,
                      float r, float m,
@@ -22,7 +23,7 @@ Simulator::Simulator(int num_balls,
         std::uniform_int_distribution<int> distr_pos_x(1, win_w - 2*r - 1);
         std::uniform_int_distribution<int> distr_pos_y(1, win_h - 2*r - 1);
 
-        std::uniform_real_distribution<float> distr_v(0.01f, 0.3f);
+        std::uniform_real_distribution<float> distr_v(1.f, 7.f);
 
         int x = distr_pos_x(gen);
         int y = distr_pos_y(gen);
@@ -143,6 +144,7 @@ void Simulator::execute()
        sf::VideoMode(win_w, win_h),
        "SFML Colision Simulator"
     );
+    window.setFramerateLimit(FPS);
 
 
     // Text Font
@@ -158,8 +160,6 @@ void Simulator::execute()
 
     // Clock
     sf::Clock clock;
-    int frames = 0;
-    int fps = 0;
     int t = 0;
 
     while (window.isOpen())
@@ -240,13 +240,10 @@ void Simulator::execute()
         float vycm = vy_total / m_total;
 
 
-        // Calculate fps
-        frames++;
+        // Count time
         if (clock.getElapsedTime().asSeconds() >= 1.f)
         {
             t++;
-            fps = frames;
-            frames = 0;
             clock.restart();
         }
 
@@ -262,13 +259,12 @@ void Simulator::execute()
            << "Vxcm=" << std::setprecision(3) << vxcm << std::endl
            << "Vycm=" << std::setprecision(3) << vycm << std::endl
            << "res=" << win_w << "x" << win_h << std::endl
-           << "fps=" << fps << std::endl
+           << "fps=" << FPS << std::endl
            << "t=" << t << "s" << std::endl
            ;
 
         text.setString(ss.str());
         window.draw(text);
-
 
         window.display();
     }
