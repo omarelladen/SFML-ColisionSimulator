@@ -156,6 +156,11 @@ void Simulator::execute()
     text.setCharacterSize(12);
     text.setPosition(10,10);
 
+    // Clock
+    sf::Clock clock;
+    int frames = 0;
+    int fps = 0;
+    int t = 0;
 
     while (window.isOpen())
     {
@@ -234,6 +239,17 @@ void Simulator::execute()
         float vxcm = vx_total / m_total;
         float vycm = vy_total / m_total;
 
+
+        // Calculate fps
+        frames++;
+        if (clock.getElapsedTime().asSeconds() >= 1.f)
+        {
+            t++;
+            fps = frames;
+            frames = 0;
+            clock.restart();
+        }
+
         // Draw stats Text
         std::ostringstream ss;
         ss << "n=" << num_balls << std::endl
@@ -246,10 +262,13 @@ void Simulator::execute()
            << "Vxcm=" << std::setprecision(3) << vxcm << std::endl
            << "Vycm=" << std::setprecision(3) << vycm << std::endl
            << "res=" << win_w << "x" << win_h << std::endl
+           << "fps=" << fps << std::endl
+           << "t=" << t << "s" << std::endl
            ;
 
         text.setString(ss.str());
         window.draw(text);
+
 
         window.display();
     }
