@@ -1,7 +1,7 @@
 #include "Simulator.h"
 
 #define MAX_TRIES 100000
-#define FPS 120
+#define FPS 60
 
 Simulator::Simulator(int num_balls,
                      float r, float m,
@@ -144,7 +144,7 @@ void Simulator::execute()
        sf::VideoMode(win_w, win_h),
        "SFML Colision Simulator"
     );
-    window.setFramerateLimit(FPS);
+    window.setFramerateLimit(FPS);  // frequency of main loop execution
 
 
     // Text Font
