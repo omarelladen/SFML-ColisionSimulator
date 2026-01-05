@@ -18,6 +18,7 @@ void readInput(int *p, int d, const std::string s)
     clearCinBuffer();
 }
 
+
 int main()
 {
     // Input
@@ -32,10 +33,11 @@ int main()
     readInput(&m, 1, "Ball mass");
 
     int win_w;
-    readInput(&win_w, 600, "Window width");
+    readInput(&win_w, 500, "Window width");
 
     int win_h;
-    readInput(&win_h, 600, "Window height");
+    readInput(&win_h, 500, "Window height");
+
 
     if (2*r >= win_h || 2*r >= win_w)
     {
@@ -50,6 +52,7 @@ int main()
         simulator.execute();
     else
         std::cout << "Bad size!" << std::endl;
+
 
     return 0;
 }

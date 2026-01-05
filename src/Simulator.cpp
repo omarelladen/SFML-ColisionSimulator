@@ -1,7 +1,10 @@
 #include "Simulator.h"
 
+#define FONT_PATH "data/fonts/OpenSans-VariableFont_wdth,wght.ttf"
+#define WIN_TITLE "SFML Colision Simulator"
 #define MAX_TRIES 100000
 #define FPS 60
+
 
 Simulator::Simulator(int num_balls,
                      float r, float m,
@@ -142,14 +145,15 @@ void Simulator::execute()
     // Window
     sf::RenderWindow window(
        sf::VideoMode(win_w, win_h),
-       "SFML Colision Simulator"
+       WIN_TITLE,
+       sf::Style::Close
     );
     window.setFramerateLimit(FPS);  // frequency of main loop execution
 
 
     // Text Font
     sf::Font font;
-    font.loadFromFile("data/fonts/OpenSans-VariableFont_wdth,wght.ttf");
+    font.loadFromFile(FONT_PATH);
 
     // Stats Text
     sf::Text text;
