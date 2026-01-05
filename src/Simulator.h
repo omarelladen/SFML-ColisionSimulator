@@ -26,8 +26,8 @@ public:
     void execute();
 
 private:
-    bool colided_ball(Ball *ball1, Ball *ball2);
-    void update_colision_vel(Ball *b1, Ball *b2);
-    bool colided_wall_v(Ball *b);
-    bool colided_wall_h(Ball *b);
+    bool colidedBalls(Ball *ball1, Ball *ball2);
+    void updateColisionVel(Ball *b1, Ball *b2);
+    bool colidedWallV(Ball *b);
+    bool colidedWallH(Ball *b);
 };
