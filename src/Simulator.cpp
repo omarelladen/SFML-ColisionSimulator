@@ -249,8 +249,8 @@ void Simulator::execute()
            ;
 
         text.setString(ss.str());
-	    window.draw(text);
+        window.draw(text);
 
-		window.display();
+        window.display();
     }
 }
