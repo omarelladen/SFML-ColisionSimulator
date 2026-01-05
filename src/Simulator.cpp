@@ -48,7 +48,7 @@ Simulator::Simulator(int num_balls,
                {
                    Ball *p_ball_check = balls[i];
                    if (p_ball_check != p_ball &&
-                       colided_ball(p_ball, p_ball_check))
+                       colidedBalls(p_ball, p_ball_check))
                    {
                        num_tries++;
                        delete p_ball;
@@ -83,7 +83,7 @@ int Simulator::getNumBalls()
     return num_balls;
 }
 
-bool Simulator::colided_ball(Ball *p_b1, Ball *p_b2)
+bool Simulator::colidedBalls(Ball *p_b1, Ball *p_b2)
 {
     float dx = p_b1->getX() - p_b2->getX();
     float dy = p_b1->getY() - p_b2->getY();
@@ -94,21 +94,21 @@ bool Simulator::colided_ball(Ball *p_b1, Ball *p_b2)
     return (d <= d_colision);
 }
 
-bool Simulator::colided_wall_v(Ball *b)
+bool Simulator::colidedWallV(Ball *b)
 {
     // Left and Right
     return (b->getX() > (win_w - 2*b->getR()) ||
             b->getX() < 0);
 }
 
-bool Simulator::colided_wall_h(Ball *b)
+bool Simulator::colidedWallH(Ball *b)
 {
     // Top and Bottom
     return (b->getY() > (win_h - 2*b->getR()) ||
             b->getY() < 0);
 }
 
-void Simulator::update_colision_vel(Ball *p_b1, Ball *p_b2)
+void Simulator::updateColisionVel(Ball *p_b1, Ball *p_b2)
 {
     float dx = p_b1->getX() - p_b2->getX();
     float dy = p_b1->getY() - p_b2->getY();
@@ -174,11 +174,11 @@ void Simulator::execute()
                 Ball *p_b1 = balls[i];
                 Ball *p_b2 = balls[j];
 
-                if (colided_ball(p_b1, p_b2) &&
+                if (colidedBalls(p_b1, p_b2) &&
                     (p_b1->getPrevCol() != p_b2 ||
                      p_b2->getPrevCol() != p_b1))
                 {
-                    update_colision_vel(p_b1, p_b2);
+                    updateColisionVel(p_b1, p_b2);
                     p_b1->setPrevCol(p_b2);
                     p_b2->setPrevCol(p_b1);
                 }
@@ -190,12 +190,12 @@ void Simulator::execute()
         {
             Ball *p_b = balls[i];
 
-            if (colided_wall_v(p_b))
+            if (colidedWallV(p_b))
             {
                 p_b->setVX((-1) * p_b->getVX());
                 p_b->setPrevCol(nullptr);
             }
-            if (colided_wall_h(p_b))
+            if (colidedWallH(p_b))
             {
                 p_b->setVY((-1) * p_b->getVY());
                 p_b->setPrevCol(nullptr);
