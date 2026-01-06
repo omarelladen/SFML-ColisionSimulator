@@ -26,7 +26,7 @@ Simulator::Simulator(int num_balls,
         std::uniform_int_distribution<int> distr_pos_x(1, win_w - 2*r - 1);
         std::uniform_int_distribution<int> distr_pos_y(1, win_h - 2*r - 1);
 
-        std::uniform_real_distribution<float> distr_v(1.f, 7.f);
+        std::uniform_real_distribution<float> distr_v(1.f, 3.f);
 
         int x = distr_pos_x(gen);
         int y = distr_pos_y(gen);
@@ -172,7 +172,7 @@ void Simulator::execute()
 
     while (window.isOpen())
     {
-        // Check close window event
+        // Check close event
         sf::Event event;
         while (window.pollEvent(event))
             if (event.type == sf::Event::Closed)

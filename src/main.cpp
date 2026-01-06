@@ -28,7 +28,7 @@ int main()
 {
     // Input
 
-    int num_balls = 0;
+    int num_balls;
     readInput(&num_balls, 3, "Number of balls");
     if (num_balls < 1)
     {
