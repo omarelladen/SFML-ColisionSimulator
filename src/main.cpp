@@ -7,13 +7,18 @@ void clearCinBuffer()
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-void readInput(int *p, int d, const std::string s)
+void readInput(int *ptr, int default_value, const std::string title)
 {
-    std::cout << s << " [" << d << "]: ";
+    std::cout << title << " [" << default_value << "]: ";
     if (std::cin.peek() == '\n')
-        *p = d;
-    else if (!(std::cin >> *p))
-        std::cout << "Invalid input!" << std::endl;
+    {
+        *ptr = default_value;
+    }
+    else if (!(std::cin >> *ptr))
+    {
+        std::cout << "Invalid input! Using default" << std::endl;
+        *ptr = default_value;
+    }
 
     clearCinBuffer();
 }
