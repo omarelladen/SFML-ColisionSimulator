@@ -3,7 +3,7 @@
 #define FONT_PATH "data/fonts/OpenSans-VariableFont_wdth,wght.ttf"
 #define WIN_TITLE "SFML Colision Simulator"
 #define MAX_TRIES 100000
-#define FPS 60
+#define FPS_LIMIT 500
 
 
 Simulator::Simulator(int num_balls,
@@ -148,7 +148,7 @@ void Simulator::execute()
        WIN_TITLE,
        sf::Style::Close
     );
-    window.setFramerateLimit(FPS);  // frequency of main loop execution
+    window.setFramerateLimit(FPS_LIMIT);  // frequency of main loop execution
 
 
     // Text Font
@@ -165,6 +165,10 @@ void Simulator::execute()
     // Clock
     sf::Clock clock;
     int t = 0;
+
+    // Real fps
+    int fps = FPS_LIMIT;
+    int frames = 0;
 
     while (window.isOpen())
     {
@@ -245,10 +249,13 @@ void Simulator::execute()
 
 
         // Count time
-        if (clock.getElapsedTime().asSeconds() >= 1.f)
+        if (clock.getElapsedTime().asMilliseconds() >= 1000)
         {
             t++;
             clock.restart();
+
+            fps = frames;
+            frames = 0;
         }
 
         // Draw stats Text
@@ -263,13 +270,15 @@ void Simulator::execute()
            << "Vxcm=" << std::setprecision(3) << vxcm << std::endl
            << "Vycm=" << std::setprecision(3) << vycm << std::endl
            << "res=" << win_w << "x" << win_h << std::endl
-           << "fps=" << FPS << std::endl
+           << "fps=" << fps << std::endl
            << "t=" << t << "s" << std::endl
            ;
 
         text.setString(ss.str());
         window.draw(text);
 
+
         window.display();
+        frames++;
     }
 }
