@@ -3,7 +3,7 @@
 #define FONT_PATH "data/fonts/OpenSans-VariableFont_wdth,wght.ttf"
 #define WIN_TITLE "SFML Colision Simulator"
 #define MAX_TRIES 100000
-#define FPS_LIMIT 500
+#define FPS_LIMIT 60
 
 
 Simulator::Simulator(int num_balls,
