@@ -18,7 +18,7 @@ private:
 public:
     Simulator(unsigned int num_balls,
               float r, float m,
-              int win_w, int win_h);
+              unsigned int win_w, unsigned int win_h);
     ~Simulator();
 
     unsigned int getNumBalls() const;
