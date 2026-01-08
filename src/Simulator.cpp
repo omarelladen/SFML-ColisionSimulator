@@ -6,6 +6,7 @@
 #define FPS_LIMIT 60
 #define NUM_CELLS 4
 
+
 Simulator::Simulator(unsigned int num_balls,
                      float r, float m,
                      int win_w, int win_h):
@@ -84,12 +85,12 @@ Simulator::~Simulator()
         delete balls[i];
 }
 
-unsigned int Simulator::getNumBalls()
+unsigned int Simulator::getNumBalls() const
 {
     return num_balls;
 }
 
-bool Simulator::colidedBalls(Ball *p_b1, Ball *p_b2)
+bool Simulator::colidedBalls(Ball *p_b1, Ball *p_b2) const
 {
     float dx = p_b1->getX() - p_b2->getX();
     float dy = p_b1->getY() - p_b2->getY();
@@ -100,14 +101,14 @@ bool Simulator::colidedBalls(Ball *p_b1, Ball *p_b2)
     return (d <= d_colision);
 }
 
-bool Simulator::colidedWallV(Ball *b)
+bool Simulator::colidedWallV(Ball *b) const
 {
     // Left and Right
     return (b->getX() > (win_w - 2*b->getR()) ||
             b->getX() < 0);
 }
 
-bool Simulator::colidedWallH(Ball *b)
+bool Simulator::colidedWallH(Ball *b) const
 {
     // Top and Bottom
     return (b->getY() > (win_h - 2*b->getR()) ||
