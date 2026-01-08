@@ -9,7 +9,7 @@
 
 Simulator::Simulator(unsigned int num_balls,
                      float r, float m,
-                     int win_w, int win_h):
+                     unsigned int win_w, unsigned int win_h):
     balls(),
     num_balls(0),
     win_w(win_w),
@@ -26,12 +26,10 @@ Simulator::Simulator(unsigned int num_balls,
         // Generate random values
         std::uniform_int_distribution<int> distr_pos_x(1, win_w - 2*r - 1);
         std::uniform_int_distribution<int> distr_pos_y(1, win_h - 2*r - 1);
-
         std::uniform_real_distribution<float> distr_v(1.f, 3.f);
 
-        int x = distr_pos_x(gen);
-        int y = distr_pos_y(gen);
-
+        unsigned int x = distr_pos_x(gen);
+        unsigned int y = distr_pos_y(gen);
         float vx = distr_v(gen);
         float vy = distr_v(gen);
 
@@ -210,11 +208,11 @@ void Simulator::execute()
 
     // Clock
     sf::Clock clock;
-    int t = 0;
+    unsigned int t = 0;
 
     // Real fps
-    int fps = FPS_LIMIT;
-    int frames = 0;
+    unsigned int fps = FPS_LIMIT;
+    unsigned int frames = 0;
 
 
     // Grid division

@@ -9,16 +9,23 @@ void clearCinBuffer()
 
 void readInput(unsigned int *ptr, unsigned int default_value, const std::string title)
 {
+    int tmp_value;
+
     std::cout << title << " [" << default_value << "]: ";
     if (std::cin.peek() == '\n')
     {
         *ptr = default_value;
     }
-    else if (!(std::cin >> *ptr))
+    else if (!(std::cin >> tmp_value))
     {
         std::cout << "Invalid input! Using default" << std::endl;
         *ptr = default_value;
     }
+
+    if (tmp_value < 0)
+        *ptr = -tmp_value;
+    else
+        *ptr = tmp_value;
 
     clearCinBuffer();
 }
@@ -76,7 +83,7 @@ int main()
     }
 
 
-    Simulator simulator(num_balls, r, m, win_h, win_w);
+    Simulator simulator(num_balls, r, m, win_w, win_h);
 
     if (simulator.getNumBalls() > 0)
         simulator.execute();
