@@ -99,18 +99,18 @@ bool Simulator::colidedBalls(Ball *p_b1, Ball *p_b2) const
     return (d <= d_colision);
 }
 
-bool Simulator::colidedWallV(Ball *b) const
+bool Simulator::colidedWallV(Ball *p_b) const
 {
     // Left and Right
-    return (b->getX() > (win_w - 2*b->getR()) ||
-            b->getX() < 0);
+    return (p_b->getX() > (win_w - 2*p_b->getR()) ||
+            p_b->getX() < 0);
 }
 
-bool Simulator::colidedWallH(Ball *b) const
+bool Simulator::colidedWallH(Ball *p_b) const
 {
     // Top and Bottom
-    return (b->getY() > (win_h - 2*b->getR()) ||
-            b->getY() < 0);
+    return (p_b->getY() > (win_h - 2*p_b->getR()) ||
+            p_b->getY() < 0);
 }
 
 void Simulator::updateColisionVel(Ball *p_b1, Ball *p_b2)
@@ -173,12 +173,37 @@ void Simulator::checkColisionsWalls(std::vector<Ball*>& balls)
 
         if (colidedWallV(p_b))
         {
-            p_b->setVX((-1) * p_b->getVX());
+            if (p_b->getX() < 0)  // left
+            {
+                p_b->setX(1 + 2*p_b->getR());
+                if (p_b->getVX() < 0)
+                    p_b->setVX(-p_b->getVX());
+            }
+            else  // right
+            {
+                p_b->setX(win_w - 2*p_b->getR() - 1);
+                if (p_b->getVX() > 0)
+                    p_b->setVX(-p_b->getVX());
+            }
+
             p_b->setPrevCol(nullptr);
         }
         if (colidedWallH(p_b))
         {
-            p_b->setVY((-1) * p_b->getVY());
+            if (p_b->getY() < 0)  // top
+            {
+                p_b->setY(1 + 2*p_b->getR());
+                if (p_b->getVY() < 0)
+                    p_b->setVY(-p_b->getVY());
+            }
+            else  // bottom
+            {
+                p_b->setY(win_h - 2*p_b->getR() - 1);
+                if (p_b->getVY() > 0)
+                    p_b->setVY(-p_b->getVY());
+
+            }
+
             p_b->setPrevCol(nullptr);
         }
     }

@@ -51,6 +51,16 @@ void Ball::setVY(float vy)
     v.y = vy;
 }
 
+void Ball::setX(float x)
+{
+    x = x;
+}
+
+void Ball::setY(float y)
+{
+    y = y;
+}
+
 void Ball::setPrevCol(Ball *p_b)
 {
     p_prev_col = p_b;
