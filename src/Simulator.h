@@ -27,9 +27,9 @@ public:
 
 private:
     bool colidedBalls(Ball *ball1, Ball *ball2) const;
-    void updateColisionVel(Ball *b1, Ball *b2);
-    bool colidedWallV(Ball *b) const;
-    bool colidedWallH(Ball *b) const;
+    void updateColisionVel(Ball *p_b1, Ball *p_b2);
+    bool colidedWallV(Ball *p_b) const;
+    bool colidedWallH(Ball *p_b) const;
     void checkColisionsBalls(std::vector<Ball*>& balls);
     void checkColisionsWalls(std::vector<Ball*>& balls);
 };
