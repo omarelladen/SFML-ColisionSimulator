@@ -7,7 +7,7 @@ void clearCinBuffer()
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-void readInput(int *ptr, int default_value, const std::string title)
+void readInput(unsigned int *ptr, unsigned int default_value, const std::string title)
 {
     std::cout << title << " [" << default_value << "]: ";
     if (std::cin.peek() == '\n')
@@ -28,7 +28,7 @@ int main()
 {
     // Input
 
-    int num_balls;
+    unsigned int num_balls;
     readInput(&num_balls, 3, "Number of balls");
     if (num_balls < 1)
     {
@@ -36,7 +36,7 @@ int main()
         return 0;
     }
 
-    int r;
+    unsigned int r;
     readInput(&r, 30, "Ball radius");
     if (r < 1)
     {
@@ -44,7 +44,7 @@ int main()
         return 0;
     }
 
-    int m;
+    unsigned int m;
     readInput(&m, 1, "Ball mass");
     if (m < 1)
     {
@@ -52,7 +52,7 @@ int main()
         return 0;
     }
 
-    int win_w;
+    unsigned int win_w;
     readInput(&win_w, 500, "Window width");
     if (win_w < r)
     {
@@ -60,7 +60,7 @@ int main()
         return 0;
     }
 
-    int win_h;
+    unsigned int win_h;
     readInput(&win_h, 500, "Window height");
     if (win_h < r)
     {

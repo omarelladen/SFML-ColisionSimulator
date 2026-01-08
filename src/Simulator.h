@@ -11,17 +11,17 @@ class Simulator
 {
 private:
     std::vector<Ball*> balls;
-    int num_balls;
-    int win_w;
-    int win_h;
+    unsigned int num_balls;
+    unsigned int win_w;
+    unsigned int win_h;
 
 public:
-    Simulator(int num_balls,
+    Simulator(unsigned int num_balls,
               float r, float m,
               int win_w, int win_h);
     ~Simulator();
 
-    int getNumBalls();
+    unsigned int getNumBalls();
 
     void execute();
 

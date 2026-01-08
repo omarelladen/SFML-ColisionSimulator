@@ -4,22 +4,22 @@
 #define WIN_TITLE "SFML Colision Simulator"
 #define MAX_TRIES 100000
 #define FPS_LIMIT 60
+#define NUM_CELLS 4
 
-
-Simulator::Simulator(int num_balls,
+Simulator::Simulator(unsigned int num_balls,
                      float r, float m,
                      int win_w, int win_h):
     balls(),
-    num_balls(num_balls),
+    num_balls(0),
     win_w(win_w),
     win_h(win_h)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
 
-    int count_new_balls = 0;
-    int num_tries = 0;
-    while (count_new_balls < this->num_balls &&
+    unsigned int count_new_balls = 0;
+    unsigned int num_tries = 0;
+    while (count_new_balls < num_balls &&
            num_tries < MAX_TRIES)
     {
         // Generate random values
@@ -48,7 +48,7 @@ Simulator::Simulator(int num_balls,
             else
             {
                // Check overlap
-               for (int i = 0; i < count_new_balls; i++)
+               for (unsigned int i = 0; i < count_new_balls; i++)
                {
                    Ball *p_ball_check = balls[i];
                    if (p_ball_check != p_ball &&
@@ -74,15 +74,17 @@ Simulator::Simulator(int num_balls,
 
     if (num_tries == MAX_TRIES)
         this->num_balls = 0;
+    else
+        this->num_balls = balls.size();
 }
 
 Simulator::~Simulator()
 {
-    for (int i = 0; i < num_balls; i++)
+    for (unsigned int i = 0; i < num_balls; i++)
         delete balls[i];
 }
 
-int Simulator::getNumBalls()
+unsigned int Simulator::getNumBalls()
 {
     return num_balls;
 }
@@ -166,7 +168,7 @@ void Simulator::checkColisionsBalls(std::vector<Ball*>& balls)
 
 void Simulator::checkColisionsWalls(std::vector<Ball*>& balls)
 {
-    for (int i = 0; i < num_balls; i++)
+    for (unsigned int i = 0; i < num_balls; i++)
     {
         Ball *p_b = balls[i];
 
@@ -218,7 +220,7 @@ void Simulator::execute()
     float div_x = win_w / 2;
     float div_y = win_h / 2;
 
-    // Grid balls
+    // Cell balls
     std::vector<Ball*> balls_1;
     std::vector<Ball*> balls_2;
     std::vector<Ball*> balls_3;
@@ -234,14 +236,14 @@ void Simulator::execute()
                 window.close();
 
 
-        // Clear grid
+        // Clear cell balls
         balls_1.clear();
         balls_2.clear();
         balls_3.clear();
         balls_4.clear();
 
-        // Separate balls (each ball inside at least one)
-        for (int i = 0; i < num_balls; i++)
+        // Insert each ball inside at least one cell
+        for (unsigned int i = 0; i < num_balls; i++)
         {
             Ball *p_ball = balls[i];
             if (p_ball->getY() - p_ball->getR() <= div_y)
@@ -260,6 +262,7 @@ void Simulator::execute()
             }
         }
 
+
         // Check colision with walls
         checkColisionsWalls(balls);
 
@@ -272,7 +275,7 @@ void Simulator::execute()
 
         // Move and draw the balls
         window.clear(sf::Color::Black);
-        for (int i = 0; i < num_balls; i++)
+        for (unsigned int i = 0; i < num_balls; i++)
         {
             Ball *p_b = balls[i];
             p_b->move();
@@ -286,7 +289,7 @@ void Simulator::execute()
         double  m_total = 0;
         double  k_total = 0;
 
-        for (int i = 0; i < num_balls; i++)
+        for (unsigned int i = 0; i < num_balls; i++)
         {
             Ball *p_b = balls[i];
 
@@ -327,6 +330,7 @@ void Simulator::execute()
            << "Vxcm=" << std::setprecision(3) << vxcm << std::endl
            << "Vycm=" << std::setprecision(3) << vycm << std::endl
            << "res=" << win_w << "x" << win_h << std::endl
+           << "cells=" << NUM_CELLS << std::endl
            << "fps=" << fps << std::endl
            << "t=" << t << "s" << std::endl
            ;
