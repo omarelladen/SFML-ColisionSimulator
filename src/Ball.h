@@ -22,14 +22,14 @@ public:
     );
     ~Ball();
 
-    sf::CircleShape getBody();
-    float getX();
-    float getY();
-    float getVX();
-    float getVY();
-    float getR();
-    float getM();
-    Ball *getPrevCol();
+    sf::CircleShape getBody() const;
+    float getX() const;
+    float getY() const;
+    float getVX() const;
+    float getVY() const;
+    float getR() const;
+    float getM() const;
+    Ball *getPrevCol() const;
 
     void setVX(float vx);
     void setVY(float vy);

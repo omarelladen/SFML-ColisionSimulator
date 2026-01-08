@@ -25,21 +25,21 @@ Ball::~Ball()
 {
 }
 
-sf::CircleShape Ball::getBody() {return body;}
+sf::CircleShape Ball::getBody() const {return body;}
 
-float Ball::getX() {return pos.x;}
+float Ball::getX() const {return pos.x;}
 
-float Ball::getY() {return pos.y;}
+float Ball::getY() const {return pos.y;}
 
-float Ball::getVX() {return v.x;}
+float Ball::getVX() const {return v.x;}
 
-float Ball::getVY() {return v.y;}
+float Ball::getVY() const {return v.y;}
 
-float Ball::getR() {return r;}
+float Ball::getR() const {return r;}
 
-float Ball::getM() {return m;}
+float Ball::getM() const {return m;}
 
-Ball *Ball::getPrevCol() {return p_prev_col;}
+Ball *Ball::getPrevCol() const {return p_prev_col;}
 
 void Ball::setVX(float vx)
 {

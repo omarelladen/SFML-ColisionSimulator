@@ -21,15 +21,15 @@ public:
               int win_w, int win_h);
     ~Simulator();
 
-    unsigned int getNumBalls();
+    unsigned int getNumBalls() const;
 
     void execute();
 
 private:
-    bool colidedBalls(Ball *ball1, Ball *ball2);
+    bool colidedBalls(Ball *ball1, Ball *ball2) const;
     void updateColisionVel(Ball *b1, Ball *b2);
-    bool colidedWallV(Ball *b);
-    bool colidedWallH(Ball *b);
+    bool colidedWallV(Ball *b) const;
+    bool colidedWallH(Ball *b) const;
     void checkColisionsBalls(std::vector<Ball*>& balls);
     void checkColisionsWalls(std::vector<Ball*>& balls);
 };
