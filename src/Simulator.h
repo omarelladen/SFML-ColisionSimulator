@@ -30,4 +30,6 @@ private:
     void updateColisionVel(Ball *b1, Ball *b2);
     bool colidedWallV(Ball *b);
     bool colidedWallH(Ball *b);
+    void checkColisionsBalls(std::vector<Ball*>& balls);
+    void checkColisionsWalls(std::vector<Ball*>& balls);
 };
