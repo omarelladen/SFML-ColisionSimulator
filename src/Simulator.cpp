@@ -140,6 +140,49 @@ void Simulator::updateColisionVel(Ball *p_b1, Ball *p_b2)
     p_b2->setVY(proj_vy_1 + oproj_vy_2);
 }
 
+void Simulator::checkColisionsBalls(std::vector<Ball*>& balls)
+{
+    unsigned int num_balls = balls.size();
+
+    // Check colision between balls
+    for (unsigned int i = 0; i < num_balls; i++)
+    {
+        for (unsigned int j = i+1; j < num_balls; j++)
+        {
+            Ball *p_b1 = balls[i];
+            Ball *p_b2 = balls[j];
+
+            if (colidedBalls(p_b1, p_b2) &&
+                (p_b1->getPrevCol() != p_b2 ||
+                 p_b2->getPrevCol() != p_b1))
+            {
+                updateColisionVel(p_b1, p_b2);
+                p_b1->setPrevCol(p_b2);
+                p_b2->setPrevCol(p_b1);
+            }
+        }
+    }
+}
+
+void Simulator::checkColisionsWalls(std::vector<Ball*>& balls)
+{
+    for (int i = 0; i < num_balls; i++)
+    {
+        Ball *p_b = balls[i];
+
+        if (colidedWallV(p_b))
+        {
+            p_b->setVX((-1) * p_b->getVX());
+            p_b->setPrevCol(nullptr);
+        }
+        if (colidedWallH(p_b))
+        {
+            p_b->setVY((-1) * p_b->getVY());
+            p_b->setPrevCol(nullptr);
+        }
+    }
+}
+
 void Simulator::execute()
 {
     // Window
@@ -170,6 +213,18 @@ void Simulator::execute()
     int fps = FPS_LIMIT;
     int frames = 0;
 
+
+    // Grid division
+    float div_x = win_w / 2;
+    float div_y = win_h / 2;
+
+    // Grid balls
+    std::vector<Ball*> balls_1;
+    std::vector<Ball*> balls_2;
+    std::vector<Ball*> balls_3;
+    std::vector<Ball*> balls_4;
+
+
     while (window.isOpen())
     {
         // Check close event
@@ -179,41 +234,41 @@ void Simulator::execute()
                 window.close();
 
 
-        // Check colision between balls
+        // Clear grid
+        balls_1.clear();
+        balls_2.clear();
+        balls_3.clear();
+        balls_4.clear();
+
+        // Separate balls (each ball inside at least one)
         for (int i = 0; i < num_balls; i++)
         {
-            for (int j = i+1; j < num_balls; j++)
+            Ball *p_ball = balls[i];
+            if (p_ball->getY() - p_ball->getR() <= div_y)
             {
-                Ball *p_b1 = balls[i];
-                Ball *p_b2 = balls[j];
-
-                if (colidedBalls(p_b1, p_b2) &&
-                    (p_b1->getPrevCol() != p_b2 ||
-                     p_b2->getPrevCol() != p_b1))
-                {
-                    updateColisionVel(p_b1, p_b2);
-                    p_b1->setPrevCol(p_b2);
-                    p_b2->setPrevCol(p_b1);
-                }
+                if (p_ball->getX() - p_ball->getR() <= div_x)
+                    balls_1.push_back(p_ball);
+                if (p_ball->getX() + p_ball->getR() >= div_x)
+                    balls_2.push_back(p_ball);
+            }
+            if (p_ball->getY() + p_ball->getR() >= div_y)
+            {
+                if (p_ball->getX() - p_ball->getR() <= div_x)
+                    balls_3.push_back(p_ball);
+                if (p_ball->getX() + p_ball->getR() >= div_x)
+                    balls_4.push_back(p_ball);
             }
         }
 
         // Check colision with walls
-        for (int i = 0; i < num_balls; i++)
-        {
-            Ball *p_b = balls[i];
+        checkColisionsWalls(balls);
 
-            if (colidedWallV(p_b))
-            {
-                p_b->setVX((-1) * p_b->getVX());
-                p_b->setPrevCol(nullptr);
-            }
-            if (colidedWallH(p_b))
-            {
-                p_b->setVY((-1) * p_b->getVY());
-                p_b->setPrevCol(nullptr);
-            }
-        }
+        // Check colision between balls of the same grid
+        checkColisionsBalls(balls_1);
+        checkColisionsBalls(balls_2);
+        checkColisionsBalls(balls_3);
+        checkColisionsBalls(balls_4);
+
 
         // Move and draw the balls
         window.clear(sf::Color::Black);
@@ -224,11 +279,13 @@ void Simulator::execute()
             window.draw(p_b->getBody());
         }
 
+
         // Calculate stats
-        double  k_total = 0;
         double vx_total = 0;
         double vy_total = 0;
         double  m_total = 0;
+        double  k_total = 0;
+
         for (int i = 0; i < num_balls; i++)
         {
             Ball *p_b = balls[i];
