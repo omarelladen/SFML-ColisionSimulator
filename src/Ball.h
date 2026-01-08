@@ -34,8 +34,6 @@ public:
     void setVX(float vx);
     void setVY(float vy);
     void setPrevCol(Ball *p_b);
-    void setX(float vx);
-    void setY(float vy);
 
     void move();
 };
