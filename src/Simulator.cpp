@@ -175,13 +175,11 @@ void Simulator::checkColisionsWalls(std::vector<Ball*>& balls)
         {
             if (p_b->getX() < 0)  // left
             {
-                p_b->setX(1 + 2*p_b->getR());
                 if (p_b->getVX() < 0)
                     p_b->setVX(-p_b->getVX());
             }
             else  // right
             {
-                p_b->setX(win_w - 2*p_b->getR() - 1);
                 if (p_b->getVX() > 0)
                     p_b->setVX(-p_b->getVX());
             }
@@ -192,16 +190,13 @@ void Simulator::checkColisionsWalls(std::vector<Ball*>& balls)
         {
             if (p_b->getY() < 0)  // top
             {
-                p_b->setY(1 + 2*p_b->getR());
                 if (p_b->getVY() < 0)
                     p_b->setVY(-p_b->getVY());
             }
             else  // bottom
             {
-                p_b->setY(win_h - 2*p_b->getR() - 1);
                 if (p_b->getVY() > 0)
                     p_b->setVY(-p_b->getVY());
-
             }
 
             p_b->setPrevCol(nullptr);
