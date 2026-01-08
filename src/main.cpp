@@ -21,11 +21,13 @@ void readInput(unsigned int *ptr, unsigned int default_value, const std::string 
         std::cout << "Invalid input! Using default" << std::endl;
         *ptr = default_value;
     }
-
-    if (tmp_value < 0)
-        *ptr = -tmp_value;
     else
-        *ptr = tmp_value;
+    {
+        if (tmp_value < 0)
+            *ptr = -tmp_value;
+        else
+            *ptr = tmp_value;
+    }
 
     clearCinBuffer();
 }
