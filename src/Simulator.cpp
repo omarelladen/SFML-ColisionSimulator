@@ -99,18 +99,24 @@ bool Simulator::colidedBalls(Ball *p_b1, Ball *p_b2) const
     return (d <= d_colision);
 }
 
-bool Simulator::colidedWallV(Ball *p_b) const
+bool Simulator::colidedWallLeft(Ball *p_b) const
 {
-    // Left and Right
-    return (p_b->getX() > (win_w - 2*p_b->getR()) ||
-            p_b->getX() < 0);
+    return (p_b->getX() < 0);
 }
 
-bool Simulator::colidedWallH(Ball *p_b) const
+bool Simulator::colidedWallRight(Ball *p_b) const
 {
-    // Top and Bottom
-    return (p_b->getY() > (win_h - 2*p_b->getR()) ||
-            p_b->getY() < 0);
+    return (p_b->getX() > (win_w - 2*p_b->getR()));
+}
+
+bool Simulator::colidedWallTop(Ball *p_b) const
+{
+    return (p_b->getY() < 0);
+}
+
+bool Simulator::colidedWallBottom(Ball *p_b) const
+{
+    return (p_b->getY() > (win_h - 2*p_b->getR()));
 }
 
 void Simulator::updateColisionVel(Ball *p_b1, Ball *p_b2)
@@ -170,37 +176,35 @@ void Simulator::checkColisionsWalls(std::vector<Ball*>& balls)
     for (unsigned int i = 0; i < num_balls; i++)
     {
         Ball *p_b = balls[i];
+        bool wall_colision = false;
 
-        if (colidedWallV(p_b))
+        if (colidedWallLeft(p_b))
         {
-            if (p_b->getX() < 0)  // left
-            {
-                if (p_b->getVX() < 0)
-                    p_b->setVX(-p_b->getVX());
-            }
-            else  // right
-            {
-                if (p_b->getVX() > 0)
-                    p_b->setVX(-p_b->getVX());
-            }
-
-            p_b->setPrevCol(nullptr);
+            if (p_b->getVX() < 0)
+                p_b->setVX(-p_b->getVX());
+            wall_colision = true;
         }
-        if (colidedWallH(p_b))
+        if (colidedWallRight(p_b))
         {
-            if (p_b->getY() < 0)  // top
-            {
-                if (p_b->getVY() < 0)
-                    p_b->setVY(-p_b->getVY());
-            }
-            else  // bottom
-            {
-                if (p_b->getVY() > 0)
-                    p_b->setVY(-p_b->getVY());
-            }
-
-            p_b->setPrevCol(nullptr);
+            if (p_b->getVX() > 0)
+                p_b->setVX(-p_b->getVX());
+            wall_colision = true;
         }
+        if (colidedWallTop(p_b))
+        {
+            if (p_b->getVY() < 0)
+                p_b->setVY(-p_b->getVY());
+            wall_colision = true;
+        }
+        if (colidedWallBottom(p_b))
+        {
+            if (p_b->getVY() > 0)
+                p_b->setVY(-p_b->getVY());
+            wall_colision = true;
+        }
+
+        if (wall_colision)   
+            p_b->setPrevCol(nullptr);
     }
 }
 
