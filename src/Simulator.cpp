@@ -18,6 +18,8 @@ Simulator::Simulator(unsigned int num_balls,
     std::random_device rd;
     std::mt19937 gen(rd());
 
+    balls.reserve(num_balls);
+
     unsigned int count_new_balls = 0;
     unsigned int num_tries = 0;
     while (count_new_balls < num_balls &&
@@ -80,7 +82,10 @@ Simulator::Simulator(unsigned int num_balls,
 Simulator::~Simulator()
 {
     for (unsigned int i = 0; i < num_balls; i++)
+    {
         delete balls[i];
+        balls[i] = nullptr;
+    }
 }
 
 unsigned int Simulator::getNumBalls() const
@@ -243,11 +248,17 @@ void Simulator::execute()
     float div_x = win_w / 2;
     float div_y = win_h / 2;
 
+
     // Cell balls
     std::vector<Ball*> balls_1;
     std::vector<Ball*> balls_2;
     std::vector<Ball*> balls_3;
     std::vector<Ball*> balls_4;
+
+    balls_1.reserve(num_balls);
+    balls_2.reserve(num_balls);
+    balls_3.reserve(num_balls);
+    balls_4.reserve(num_balls);
 
 
     while (window.isOpen())
@@ -343,19 +354,19 @@ void Simulator::execute()
 
         // Draw stats Text
         std::ostringstream ss;
-        ss << "n=" << num_balls << std::endl
-           << "r=" << balls[0]->getR() << std::endl
-           << "m=" << balls[0]->getM() << std::endl
-           << "M=" << m_total << std::endl
-           << "Vx=" << std::setprecision(3) << vx_total << std::endl
-           << "Vy=" << std::setprecision(3) << vy_total << std::endl
-           << "K=" << std::setprecision(3) << k_total << std::endl
-           << "Vxcm=" << std::setprecision(3) << vxcm << std::endl
-           << "Vycm=" << std::setprecision(3) << vycm << std::endl
-           << "res=" << win_w << "x" << win_h << std::endl
-           << "cells=" << NUM_CELLS << std::endl
-           << "fps=" << fps << std::endl
-           << "t=" << t << "s" << std::endl
+        ss << "n="     << num_balls << std::endl
+           << "r="     << std::setprecision(3) << balls[0]->getR() << std::endl
+           << "m="     << std::setprecision(3) << balls[0]->getM() << std::endl
+           << "M="     << std::setprecision(3) << m_total          << std::endl
+           << "Vx="    << std::setprecision(3) << vx_total         << std::endl
+           << "Vy="    << std::setprecision(3) << vy_total         << std::endl
+           << "K="     << std::setprecision(3) << k_total          << std::endl
+           << "Vxcm="  << std::setprecision(3) << vxcm             << std::endl
+           << "Vycm="  << std::setprecision(3) << vycm             << std::endl
+           << "res="   << win_w << "x" << win_h                    << std::endl
+           << "cells=" << NUM_CELLS                                << std::endl
+           << "fps="   << fps                                      << std::endl
+           << "t="     << t << "s"                                 << std::endl
            ;
 
         text.setString(ss.str());
