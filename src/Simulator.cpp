@@ -253,8 +253,8 @@ void Simulator::execute()
 
 
     // Grid division
-    float div_x = win_w / 2;
-    float div_y = win_h / 2;
+    float div_x = win_w / 2.f;
+    float div_y = win_h / 2.f;
 
 
     // Cell balls
