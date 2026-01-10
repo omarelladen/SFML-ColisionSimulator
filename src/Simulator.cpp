@@ -20,9 +20,9 @@ Simulator::Simulator(unsigned int num_balls,
 
     balls.reserve(num_balls);
 
-    unsigned int count_new_balls = 0;
+    unsigned int num_new_balls = 0;
     unsigned int num_tries = 0;
-    while (count_new_balls < num_balls &&
+    while (num_new_balls < num_balls &&
            num_tries < MAX_TRIES)
     {
         // Generate random values
@@ -44,12 +44,12 @@ Simulator::Simulator(unsigned int num_balls,
             if (balls.empty())
             {
                 balls.push_back(p_ball);
-                count_new_balls++;
+                num_new_balls++;
             }
             else
             {
                // Check overlap
-               for (unsigned int i = 0; i < count_new_balls; i++)
+               for (unsigned int i = 0; i < num_new_balls; i++)
                {
                    Ball *p_ball_check = balls[i];
                    if (p_ball_check != p_ball &&
@@ -67,7 +67,7 @@ Simulator::Simulator(unsigned int num_balls,
                {
                    num_tries = 0;
                    balls.push_back(p_ball);
-                   count_new_balls++;
+                   num_new_balls++;
                }
             }
         }
@@ -181,30 +181,33 @@ void Simulator::checkColisionsWalls(std::vector<Ball*>& balls)
     for (unsigned int i = 0; i < num_balls; i++)
     {
         Ball *p_b = balls[i];
+        float vx = p_b->getVX();
+        float vy = p_b->getVY();
+
         bool wall_colision = false;
 
         if (colidedWallLeft(p_b))
         {
-            if (p_b->getVX() < 0)
-                p_b->setVX(-p_b->getVX());
+            if (vx < 0)
+                p_b->setVX(-vx);
             wall_colision = true;
         }
         if (colidedWallRight(p_b))
         {
-            if (p_b->getVX() > 0)
-                p_b->setVX(-p_b->getVX());
+            if (vx > 0)
+                p_b->setVX(-vx);
             wall_colision = true;
         }
         if (colidedWallTop(p_b))
         {
-            if (p_b->getVY() < 0)
-                p_b->setVY(-p_b->getVY());
+            if (vy < 0)
+                p_b->setVY(-vy);
             wall_colision = true;
         }
         if (colidedWallBottom(p_b))
         {
-            if (p_b->getVY() > 0)
-                p_b->setVY(-p_b->getVY());
+            if (vy > 0)
+                p_b->setVY(-vy);
             wall_colision = true;
         }
 
@@ -221,7 +224,7 @@ void Simulator::execute()
        WIN_TITLE,
        sf::Style::Close
     );
-    window.setFramerateLimit(FPS_LIMIT);  // frequency of main loop execution
+    window.setFramerateLimit(FPS_LIMIT);  // freq of main loop execution
 
 
     // Text Font
@@ -241,7 +244,7 @@ void Simulator::execute()
 
     // Real fps
     unsigned int fps = FPS_LIMIT;
-    unsigned int frames = 0;
+    unsigned int num_frames = 0;
 
 
     // Grid division
@@ -361,14 +364,14 @@ void Simulator::execute()
             t++;
             clock.restart();
 
-            fps = frames;
-            frames = 0;
+            fps = num_frames;
+            num_frames = 0;
         }
 
         // Draw stats Text
         std::ostringstream ss;
         ss << std::setprecision(3)
-           << "n="     << num_balls << std::endl
+           << "n="     << num_balls        << std::endl
            << "r="     << balls[0]->getR() << std::endl
            << "m="     << balls[0]->getM() << std::endl
            << "M="     << m_total          << std::endl
@@ -377,10 +380,11 @@ void Simulator::execute()
            << "K="     << k_total          << std::endl
            << "Vxcm="  << vxcm             << std::endl
            << "Vycm="  << vycm             << std::endl
-           << "res="   << win_w << "x" << win_h                    << std::endl
-           << "cells=" << NUM_CELLS                                << std::endl
-           << "fps="   << fps                                      << std::endl
-           << "t="     << t << "s"                                 << std::endl
+           << "res="   << win_w <<"x"
+                       << win_h            << std::endl
+           << "cells=" << NUM_CELLS        << std::endl
+           << "fps="   << fps              << std::endl
+           << "t="     << t << "s"         << std::endl
            ;
 
         text.setString(ss.str());
@@ -388,6 +392,6 @@ void Simulator::execute()
 
 
         window.display();
-        frames++;
+        num_frames++;
     }
 }
