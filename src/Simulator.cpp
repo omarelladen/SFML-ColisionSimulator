@@ -289,18 +289,22 @@ void Simulator::execute()
         for (unsigned int i = 0; i < num_balls; i++)
         {
             Ball *p_ball = balls[i];
-            if (p_ball->getY() - p_ball->getR() <= div_y)
+            float x = p_ball->getX();
+            float y = p_ball->getY();
+            float r = p_ball->getR();
+
+            if (y <= div_y)
             {
-                if (p_ball->getX() - p_ball->getR() <= div_x)
+                if (x <= div_x)
                     balls_1.push_back(p_ball);
-                if (p_ball->getX() + p_ball->getR() >= div_x)
+                if (x + 2*r >= div_x)
                     balls_2.push_back(p_ball);
             }
-            if (p_ball->getY() + p_ball->getR() >= div_y)
+            if (y + 2*r >= div_y)
             {
-                if (p_ball->getX() - p_ball->getR() <= div_x)
+                if (x <= div_x)
                     balls_3.push_back(p_ball);
-                if (p_ball->getX() + p_ball->getR() >= div_x)
+                if (x + 2*r >= div_x)
                     balls_4.push_back(p_ball);
             }
         }
