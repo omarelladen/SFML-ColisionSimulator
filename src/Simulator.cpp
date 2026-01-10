@@ -227,7 +227,11 @@ void Simulator::execute()
     window.setFramerateLimit(FPS_LIMIT);  // freq of main loop execution
 
 
-    // Text Font
+    // Stats String
+    std::ostringstream ss;
+    ss << std::setprecision(3);
+
+    // Stats Font
     sf::Font font;
     font.loadFromFile(FONT_PATH);
 
@@ -237,6 +241,7 @@ void Simulator::execute()
     text.setFillColor(sf::Color::White);
     text.setCharacterSize(12);
     text.setPosition(10,10);
+
 
     // Clock
     sf::Clock clock;
@@ -369,9 +374,7 @@ void Simulator::execute()
         }
 
         // Draw stats Text
-        std::ostringstream ss;
-        ss << std::setprecision(3)
-           << "n="     << num_balls        << std::endl
+        ss << "n="     << num_balls        << std::endl
            << "r="     << balls[0]->getR() << std::endl
            << "m="     << balls[0]->getM() << std::endl
            << "M="     << m_total          << std::endl
@@ -389,6 +392,8 @@ void Simulator::execute()
 
         text.setString(ss.str());
         window.draw(text);
+        ss.str("");
+        ss.clear();
 
 
         window.display();
