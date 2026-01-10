@@ -367,15 +367,16 @@ void Simulator::execute()
 
         // Draw stats Text
         std::ostringstream ss;
-        ss << "n="     << num_balls << std::endl
-           << "r="     << std::setprecision(3) << balls[0]->getR() << std::endl
-           << "m="     << std::setprecision(3) << balls[0]->getM() << std::endl
-           << "M="     << std::setprecision(3) << m_total          << std::endl
-           << "Vx="    << std::setprecision(3) << vx_total         << std::endl
-           << "Vy="    << std::setprecision(3) << vy_total         << std::endl
-           << "K="     << std::setprecision(3) << k_total          << std::endl
-           << "Vxcm="  << std::setprecision(3) << vxcm             << std::endl
-           << "Vycm="  << std::setprecision(3) << vycm             << std::endl
+        ss << std::setprecision(3)
+           << "n="     << num_balls << std::endl
+           << "r="     << balls[0]->getR() << std::endl
+           << "m="     << balls[0]->getM() << std::endl
+           << "M="     << m_total          << std::endl
+           << "Vx="    << vx_total         << std::endl
+           << "Vy="    << vy_total         << std::endl
+           << "K="     << k_total          << std::endl
+           << "Vxcm="  << vxcm             << std::endl
+           << "Vycm="  << vycm             << std::endl
            << "res="   << win_w << "x" << win_h                    << std::endl
            << "cells=" << NUM_CELLS                                << std::endl
            << "fps="   << fps                                      << std::endl
