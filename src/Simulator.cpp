@@ -266,8 +266,17 @@ void Simulator::execute()
         // Check close event
         sf::Event event;
         while (window.pollEvent(event))
+        {
+            // X
             if (event.type == sf::Event::Closed)
                 window.close();
+
+            // Ctrl+Q
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q) &&
+                (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) ||
+                 sf::Keyboard::isKeyPressed(sf::Keyboard::RControl)))
+                window.close();
+        }
 
 
         // Clear cell balls
