@@ -211,7 +211,7 @@ void Simulator::checkColisionsWalls(std::vector<Ball*>& balls)
             wall_colision = true;
         }
 
-        if (wall_colision)   
+        if (wall_colision)
             p_b->setPrevCol(nullptr);
     }
 }
@@ -383,7 +383,7 @@ void Simulator::execute()
            << "K="     << k_total          << std::endl
            << "Vxcm="  << vxcm             << std::endl
            << "Vycm="  << vycm             << std::endl
-           << "res="   << win_w <<"x"
+           << "res="   << win_w << "x"
                        << win_h            << std::endl
            << "cells=" << NUM_CELLS        << std::endl
            << "fps="   << fps              << std::endl
