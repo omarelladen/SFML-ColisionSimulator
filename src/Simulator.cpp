@@ -129,10 +129,10 @@ void Simulator::updateColisionVel(Ball *p_b1, Ball *p_b2)
     float dx = p_b1->getX() - p_b2->getX();
     float dy = p_b1->getY() - p_b2->getY();
 
-    float div = dx*dx + dy*dy;
+    float div_d = dx*dx + dy*dy;
 
-    float c1 = (p_b1->getVX()*dx + p_b1->getVY()*dy) / div;
-    float c2 = (p_b2->getVX()*dx + p_b2->getVY()*dy) / div;
+    float c1 = (p_b1->getVX()*dx + p_b1->getVY()*dy) / div_d;
+    float c2 = (p_b2->getVX()*dx + p_b2->getVY()*dy) / div_d;
 
     // Vector projetion on the colision direction
     float proj_vx_1 = c1 * dx;
@@ -146,10 +146,42 @@ void Simulator::updateColisionVel(Ball *p_b1, Ball *p_b2)
     float oproj_vx_2 = p_b2->getVX() - proj_vx_2;
     float oproj_vy_2 = p_b2->getVY() - proj_vy_2;
 
-    p_b1->setVX(proj_vx_2 + oproj_vx_1);
-    p_b1->setVY(proj_vy_2 + oproj_vy_1);
-    p_b2->setVX(proj_vx_1 + oproj_vx_2);
-    p_b2->setVY(proj_vy_1 + oproj_vy_2);
+
+    float vx_1_new;
+    float vy_1_new;
+    float vx_2_new;
+    float vy_2_new;
+
+    float m1 = p_b1->getM();
+    float m2 = p_b2->getM();
+    if (m1 != m2)
+    {
+        float div_m = 1/(m1 + m2);
+
+        float m21 = m2 - m1;
+        float m12 = m1 - m2;
+
+        float m1x2 = m1*2;
+        float m2x2 = m2*2;
+
+
+        vx_1_new = div_m*(m2x2*proj_vx_2 + m12*proj_vx_1) + oproj_vx_1;
+        vy_1_new = div_m*(m2x2*proj_vy_2 + m12*proj_vy_1) + oproj_vy_1;
+        vx_2_new = div_m*(m1x2*proj_vx_1 + m21*proj_vx_2) + oproj_vx_2;
+        vy_2_new = div_m*(m1x2*proj_vy_1 + m21*proj_vy_2) + oproj_vy_2;
+    }
+    else
+    {
+        vx_1_new = proj_vx_2 + oproj_vx_1;
+        vy_1_new = proj_vy_2 + oproj_vy_1;
+        vx_2_new = proj_vx_1 + oproj_vx_2;
+        vy_2_new = proj_vy_1 + oproj_vy_2;
+    }
+
+    p_b1->setVX(vx_1_new);
+    p_b1->setVY(vy_1_new);
+    p_b2->setVX(vx_2_new);
+    p_b2->setVY(vy_2_new);
 }
 
 void Simulator::checkColisionsBalls(std::vector<Ball*>& balls)
