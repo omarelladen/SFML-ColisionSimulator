@@ -15,8 +15,14 @@ Simulator::Simulator(unsigned int num_balls,
     win_w(win_w),
     win_h(win_h)
 {
+    // Generate random values
     std::random_device rd;
     std::mt19937 gen(rd());
+
+    std::uniform_int_distribution<int> distr_x(1, win_w - 2*r - 1);
+    std::uniform_int_distribution<int> distr_y(1, win_h - 2*r - 1);
+    std::uniform_real_distribution<float> distr_v(1.f, 3.f);
+
 
     balls.reserve(num_balls);
 
@@ -25,16 +31,10 @@ Simulator::Simulator(unsigned int num_balls,
     while (num_new_balls < num_balls &&
            num_tries < MAX_TRIES)
     {
-        // Generate random values
-        std::uniform_int_distribution<int> distr_pos_x(1, win_w - 2*r - 1);
-        std::uniform_int_distribution<int> distr_pos_y(1, win_h - 2*r - 1);
-        std::uniform_real_distribution<float> distr_v(1.f, 3.f);
-
-        unsigned int x = distr_pos_x(gen);
-        unsigned int y = distr_pos_y(gen);
+        unsigned int x = distr_x(gen);
+        unsigned int y = distr_y(gen);
         float vx = distr_v(gen);
         float vy = distr_v(gen);
-
 
         Ball *p_ball = new Ball(x, y, vx, vy, r, m);
 
@@ -73,10 +73,10 @@ Simulator::Simulator(unsigned int num_balls,
         }
     }
 
-    if (num_tries == MAX_TRIES)
+    if (num_tries == MAX_TRIES)  // unable to fit all balls
         this->num_balls = 0;
     else
-        this->num_balls = balls.size();
+        this->num_balls = num_balls;
 }
 
 Simulator::~Simulator()
@@ -226,7 +226,7 @@ void Simulator::checkColisionsWalls(std::vector<Ball*>& balls)
 
         if (colidedWallLeft(p_b))
         {
-            if (vx < 0)
+            if (vx < 0)  // check to prevent wall glitches
                 p_b->setVX(-vx);
             wall_colision = true;
         }
