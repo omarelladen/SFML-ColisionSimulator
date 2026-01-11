@@ -60,7 +60,6 @@ int main()
     readInput(&win_w, 500u, static_cast<unsigned int>(r), "Window width");
     readInput(&win_h, 500u, static_cast<unsigned int>(r), "Window height");
 
-
     if (2*r >= win_h || 2*r >= win_w)
     {
         std::cout << "Bad size!" << std::endl;
@@ -74,7 +73,6 @@ int main()
         simulator.execute();
     else
         std::cout << "Bad size!" << std::endl;
-
 
     return 0;
 }
