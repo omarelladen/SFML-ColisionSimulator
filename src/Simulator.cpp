@@ -21,7 +21,7 @@ Simulator::Simulator(unsigned int num_balls,
 
     std::uniform_int_distribution<int> distr_x(1, win_w - 2*r - 1);
     std::uniform_int_distribution<int> distr_y(1, win_h - 2*r - 1);
-    std::uniform_real_distribution<float> distr_v(1.f, 3.f);
+    std::uniform_real_distribution<float> distr_v(-3.f, 3.f);
 
 
     balls.reserve(num_balls);
@@ -197,9 +197,9 @@ void Simulator::checkColisionsBalls(std::vector<Ball*>& balls)
     // Check colision between balls
     for (unsigned int i = 0; i < num_balls; i++)
     {
+        Ball *p_b1 = balls[i];
         for (unsigned int j = i+1; j < num_balls; j++)
         {
-            Ball *p_b1 = balls[i];
             Ball *p_b2 = balls[j];
 
             if (colidedBalls(p_b1, p_b2) &&
@@ -207,7 +207,7 @@ void Simulator::checkColisionsBalls(std::vector<Ball*>& balls)
                  p_b2->getPrevCol() != p_b1))
             {
                 updateColisionVel(p_b1, p_b2);
-                p_b1->setPrevCol(p_b2);
+                p_b1->setPrevCol(p_b2);  // 2+ calls can still cause overlap
                 p_b2->setPrevCol(p_b1);
             }
         }
