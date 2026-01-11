@@ -95,8 +95,11 @@ unsigned int Simulator::getNumBalls() const
 
 bool Simulator::colidedBalls(Ball *p_b1, Ball *p_b2) const
 {
-    float dx = p_b1->getX() - p_b2->getX();
-    float dy = p_b1->getY() - p_b2->getY();
+    float r1 = p_b1->getR();
+    float r2 = p_b2->getR();
+
+    float dx = (p_b1->getX()+r1) - (p_b2->getX()+r2);
+    float dy = (p_b1->getY()+r1) - (p_b2->getY()+r2);
 
     float d = std::sqrt(dx*dx + dy*dy);
     float d_colision = (p_b1->getR() + p_b2->getR());
@@ -126,8 +129,11 @@ bool Simulator::colidedWallBottom(Ball *p_b) const
 
 void Simulator::updateColisionVel(Ball *p_b1, Ball *p_b2)
 {
-    float dx = p_b1->getX() - p_b2->getX();
-    float dy = p_b1->getY() - p_b2->getY();
+    float r1 = p_b1->getR();
+    float r2 = p_b2->getR();
+
+    float dx = (p_b1->getX()+r1) - (p_b2->getX()+r2);
+    float dy = (p_b1->getY()+r1) - (p_b2->getY()+r2);
 
     float div_d = dx*dx + dy*dy;
 
