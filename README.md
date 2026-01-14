@@ -8,7 +8,7 @@
 
 ## Build in Linux (Debian)
 ```sh
-sudo apt install libsfml-dev
+sudo apt install build-essential libsfml-dev pkgconf
 make
 ./simulator
 ```
