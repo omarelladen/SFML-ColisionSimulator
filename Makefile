@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -Wall -Wextra
-LDFLAGS = `pkg-config --libs sfml-graphics sfml-window sfml-system`
+LDFLAGS = `pkg-config --libs sfml-graphics`
 
 SOURCES = src/*.cpp
 TARGET = simulator
