@@ -2,13 +2,16 @@ CXX = g++
 CXXFLAGS = -Wall -Wextra
 LDFLAGS = `pkg-config --libs sfml-graphics`
 
-SOURCES = src/*.cpp
-TARGET = simulator
+SRC = src/*.cpp
+BIN = simulator
 
-all: $(TARGET)
+all: $(BIN)
 
-$(TARGET): $(SOURCES)
-	$(CXX) $(SOURCES) -o $(TARGET) $(CXXFLAGS) $(LDFLAGS)
+$(BIN): $(SRC)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
+
+run: $(BIN)
+	./$<
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(BIN)

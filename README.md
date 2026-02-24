@@ -10,5 +10,9 @@
 ```sh
 sudo apt install build-essential libsfml-dev pkgconf
 make
-./simulator
+```
+
+## Run
+```sh
+make run
 ```
