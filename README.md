@@ -6,9 +6,14 @@
 <img src="data/imgs/balls.png">
 </p>
 
-## Build in Linux (Debian)
+## Install dependencies
+### Debian packages
 ```sh
 sudo apt install build-essential libsfml-dev pkgconf
+```
+
+## Build
+```sh
 make
 ```
 
@@ -16,3 +21,8 @@ make
 ```sh
 make run
 ```
+
+## License
+[GPLv3](./LICENSE)
+
+Copyright 2024-2026 Omar Zagonel El Laden
