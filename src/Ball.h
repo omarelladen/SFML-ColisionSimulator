@@ -1,3 +1,6 @@
+// Copyright 2024-2026 Omar Zagonel El Laden
+// SPDX-License-Identifier: GPL-3.0-only
+
 #pragma once
 
 #include <SFML/Graphics.hpp>

@@ -1,3 +1,6 @@
+// Copyright 2026 Omar Zagonel El Laden
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "Simulator.h"
 
 
@@ -26,10 +29,10 @@ void readInput(T *ptr, T default_value, T min_value, const std::string title)
     else
     {
         if (tmp_value < 0)
-	    {
-	        std::cout << "Invalid input! Using default" << std::endl;
-	        *ptr = default_value;
-	    }
+        {
+            std::cout << "Invalid input! Using default" << std::endl;
+            *ptr = default_value;
+        }
         else
         {
             *ptr = static_cast<T>(tmp_value);

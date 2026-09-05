@@ -1,3 +1,6 @@
+// Copyright 2024-2026 Omar Zagonel El Laden
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "Simulator.h"
 
 #define FONT_PATH "data/fonts/OpenSans-VariableFont_wdth,wght.ttf"
@@ -7,9 +10,13 @@
 #define NUM_CELLS 4
 
 
-Simulator::Simulator(unsigned int num_balls,
-                     float r, float m,
-                     unsigned int win_w, unsigned int win_h):
+Simulator::Simulator(
+    unsigned int num_balls,
+    float r,
+    float m,
+    unsigned int win_w,
+    unsigned int win_h
+):
     balls(),
     num_balls(0),
     win_w(win_w),

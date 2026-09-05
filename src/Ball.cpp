@@ -1,10 +1,17 @@
+// Copyright 2024-2026 Omar Zagonel El Laden
+// SPDX-License-Identifier: GPL-3.0-only
+
 #include "Ball.h"
 
 
-Ball::Ball(float x, float y,
-           float vx, float vy,
-           float r, float m,
-           sf::Color color
+Ball::Ball(
+    float x,
+    float y,
+    float vx,
+    float vy,
+    float r,
+    float m,
+    sf::Color color
 ):
     r(r),
     m(m),
