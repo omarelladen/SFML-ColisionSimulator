@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "Ball.h"
+#include "ball.h"
 #include <iostream>
 #include <sstream>
 #include <iomanip>

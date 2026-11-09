@@ -1,7 +1,7 @@
 // Copyright 2024-2026 Omar Zagonel El Laden
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "Ball.h"
+#include "ball.h"
 
 
 Ball::Ball(
