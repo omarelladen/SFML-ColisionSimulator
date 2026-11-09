@@ -3,11 +3,11 @@
 
 #include "Simulator.h"
 
-#define FONT_PATH "data/fonts/OpenSans-VariableFont_wdth,wght.ttf"
-#define WIN_TITLE "SFML Colision Simulator"
-#define MAX_TRIES 100000
-#define FPS_LIMIT 60
-#define NUM_CELLS 4
+#define FONT_PATH  "data/fonts/OpenSans-VariableFont_wdth,wght.ttf"
+#define WIN_TITLE  "SFML Colision Simulator"
+#define MAX_TRIES  100000
+#define FPS_LIMIT  60
+#define NUM_CELLS  4
 
 
 Simulator::Simulator(
